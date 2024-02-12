@@ -1,0 +1,54 @@
+- hosts: all
+  become: true  # Grant elevated privileges for tasks requiring them
+  tasks:
+    - name: Update package lists
+      apt:
+        update_cache: yes
+
+    - name: Install Docker
+      apt:
+        name: docker.io
+        state: present
+      
+    - name: Stop and remove existing containers 
+      docker_container:
+        name: "{{ item }}"
+        state: absent
+      with_items:
+          - st17-gitlab-db
+          - st17-gitlab-app
+
+    - name: Remove unused image
+      docker_image:
+        name: "{{ item }}"
+        state: absent
+      with_items:
+        - khasanabdurakhmanov/khasanabdurakhmanov-repo:app_v2
+        - khasanabdurakhmanov/khasanabdurakhmanov-repo:db_v2
+
+        
+    - name: Start st17-gitlab-db container
+      docker_container:
+        name: st17-gitlab-db
+        image: khasanabdurakhmanov/khasanabdurakhmanov-repo:db_v2  
+        network_mode: host
+        detach: yes  # Run in the background
+
+    - name: Start st17-gitlab-app container
+      docker_container:
+        name: st17-gitlab-app
+        image: khasanabdurakhmanov/khasanabdurakhmanov-repo:app_v2  
+        network_mode: host
+        detach: yes
+
+    - name: Wait for 60 seconds (optional)
+      ansible.builtin.pause:
+        minutes: 1
+
+    - name: Restart exited containers 
+      docker_container:
+        name: "{{ item }}"
+        state: started
+      with_items:
+        - st17-gitlab-db
+        - st17-gitlab-app

@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" th:href="@{/style/header.css}">
+    <link rel="stylesheet" th:href="@{/style/footer.css}">
+    <link rel="stylesheet" th:href="@{/style/item.css}">
+    <link rel="icon" th:href="@{/Icons/fav/0.gif}">
+    <link rel="shortcut icon" th:href="@{/Icons/fav/0.gif}">
+    <link rel="stylesheet" th:href="@{/style/index.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/style/slick.css}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,600;1,700&amp;family=Dancing+Script:wght@400;500;600;700&amp;family=Inspiration&amp;family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&amp;display=swap" rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <title>CakeStudio</title>
+    <script th:src="@{/JS/circletype.min.js}" preload></script>
+    <script src="https://code.jquery.com/jquery-3.6.4.slim.js" integrity="sha256-dWvV84T6BhzO4vG6gWhsWVKVoa4lVmLnpBOZh/CAHU4=" crossorigin="anonymous"></script>
+    <script defer th:src="@{/JS/header.js}"></script>
+    <script src="https://cdn.lordicon.com/ritcuqlt.js"></script>
+    <script th:src="@{/JS/update_page.js}"></script>
+  </head>
+  <body>
+  <header>
+    <div class="header_wrapper">
+      <div class="header_logo"><img th:src="@{/Logo/Photographer-Arranging.svg}" alt="Logo"><a href="/" id="logo_text">Cake of your dreams</a></div>
+      <div class="header_menu">
+        <div class="header_menu_category">
+          <ul>
+            <li><a th:href="@{/news}">новости</a></li>
+            <li><a th:href="@{/production}">продукция</a></li>
+            <li><a th:href="@{/o_nas}">о нас</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="auth_wrapper">
+        <div class="dropdown">
+          <lord-icon class="dropdown-toggle" src="https://cdn.lordicon.com/ajkxzzfb.json" trigger="morph" colors="primary:#ffc738,secondary:#4bb3fd" state="morph-group" style="width:40px;height:40px"></lord-icon>
+          <div class="dropdown-content">
+            <div class="dropdown-content-wrapper">
+              <div class="dropdown-content-item" th:if="${is_auth==false || is_auth==null}"><a class="sign-in" th:href="@{/login}">Войти</a><a class="join-in" th:href="@{/registration}">Регистрация</a></div>
+              <div class="dropdown-content-item" th:if="${is_auth==true}"><a class="sign-in" th:text="${auth_name}"></a></div>
+              <div class="dropdown-content-item"><img class="close-icon" th:src="@{/Icons/close.png}" alt="close"></div>
+            </div>
+            <div class="dropdown-content-wrapper_info">
+              <div class="dropdown-content-wrapper_info_all"><img class="hover_img" th:src="@{/Icons/my_account_WB.png}" alt="My Account"><a class="hover_text" th:href="@{/my_account}" target="_blank">мой аккаунт</a></div>
+            </div>
+            <div class="dropdown-content-wrapper_info">
+              <div class="dropdown-content-wrapper_info_all"><img class="hover_img" th:src="@{/Icons/wedding_cake.png}" alt="My Orders"><a class="hover_text" th:href="@{/my_orders}" target="_blank">мои заказы</a></div>
+            </div>
+            <div class="dropdown-content-wrapper_info">
+              <div class="dropdown-content-wrapper_info_all"><img class="hover_img" th:src="@{/Icons/credit-card.png}" alt="Payment"><a class="hover_text" th:href="@{/payment_method}" target="_blank">Оплата</a></div>
+            </div>
+            <div class="dropdown-content-wrapper_info">
+              <div class="dropdown-content-wrapper_info_all"><img class="hover_img" th:src="@{/Icons/sms.png}" alt="Contact Preferences"><a class="hover_text" th:href="@{/contact_preferences}" target="_blank">Контакты</a></div>
+            </div>
+          </div>
+        </div>
+        <div class="drop">
+          <lord-icon class="drop-toggle" src="https://cdn.lordicon.com/lpddubrl.json" trigger="hover" style="width:40px;height:40px" th:onclick="|window.location.href='/to-basket'|"></lord-icon>
+          <span class="circle_basket_counter" th:if="${not #lists.isEmpty(cart_item)}" th:text="${cart_item.size()}"></span>
+          <div class="drop-content" th:if="${not #lists.isEmpty(cart_item)}">
+            <div class="drop_wrap_st">
+              <div class="drop_wrap_title">
+                <p>Моя корзина,</p><span th:text="${cart_item.size()}+' шт'"></span>
+              </div>
+              <div class="drop_wrap_icon"><img class="close-ico" th:src="@{/Icons/close.png}" alt="close"></div>
+            </div>
+            <div class="drop_wrap_nd">
+              <th:block th:each="item: ${cart_item}">
+                <div style="display:flex; flex-direction:row;margin:0px 0px 10px 0px;padding-right:10px;">
+                  <div class="purchase_img_wrap"><img th:src="@{${item.getProduct().getImage()}}" th:alt="${item.getProduct().getName()}"></div>
+                  <div class="purchase_text_wrap">
+                    <p th:text="'₽ '+${item.getProduct().getPrice()}"></p>
+                    <p th:text="${item.getProduct().getName()}"></p>
+                    <p class="item_description"><a th:href="@{'/item/'+${item.getProduct().getId()}}" th:text="${item.getProduct().getDescription()}" style="all:unset;cursor:default;"></a></p>
+                    <p>Количество:<span th:text="${item.getQuantity()}"></span></p>
+                    <div class="purchase_icon_wrap">
+                      <a th:href="@{'/basket/delete?productId='+${item.getProduct().getId()}}"><lord-icon class="trash_icon" src="https://cdn.lordicon.com/jmkrnisz.json" trigger="hover" colors="primary:#c71f16" state="hover-empty" style="width:20px;height:20px">
+                      </lord-icon></a>
+                    </div>
+                  </div>
+                </div>
+              </th:block>
+            </div>
+            <div class="drop_wrap_rd">
+              <div class="sub_total_wrap"><span class="sub_total_wrap_title">Итого</span><span class="sub_total_wrap_price" th:text="'₽ '+ ${total_price}"></span></div>
+            </div>
+            <div class="drop_wrap_th">
+              <p class="button_view_bag"><a th:href="@{/to-basket}">В корзину</a></p>
+              <p class="button_checkout_bag"><a th:href="@{/order/proverka}">Оформить</a></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+    <div class="item_pg_tabs_content" style="width:900px;">
+      <h3 style="font-size:36px;padding:10px 0px 0px 10px;	font-family: 'Roboto', sans-serif;">Доставка и оплата</h3>
+      <div class="tabs_content_inner" style="width:100%;">
+        <div class="item_pg_tabs_content_item active">
+          <p style="margin-bottom:10px;"><strong></strong><strong><span style="font-size: 20px; color: rgb(128, 100, 162);margin-bottom:10px;">Самовывоз:</span></strong></p>
+          <p style="font-size:14px;font-weight:300; margin-bottom:10px;"><strong>Москва</strong>, Комсомольская пл., 3,<br><strong>Московская обл</strong>, ул. Земляной Вал, 29,<br><strong>Москва</strong>, Комсомольская пл., 2,<br><strong>Москва</strong>, Павелецкая пл., 1,<br><strong>Москва</strong>, пл. Тверская Застава, 7,<br><strong>Москва</strong>, пл. Киевского Вокзала, 1,<br><strong>Люберцы</strong>, Кирова 9к5, <br><strong>Троицк</strong>, Сиреневый бульвар д. 8</p>
+          <iframe src="https://yandex.ru/map-widget/v1/?um=constructor%3Ab2e1d16df928abdf86df6cf20738d8d83f71676c2c9415c3aa20f655400b3959&amp;source=constructor" width="100%" height="480" frameborder="0"></iframe>
+          <p style="margin-bottom:10px;margin-top:10px;"><strong><span style="font-size: 20px; color: rgb(128, 100, 162);margin-bottom:10px;">Доставка:</span></strong></p>
+          <p style="margin-bottom:10px;font-size:14px;font-weight:300">Доставляем по Москве и Московской области с 9:00 до 22:00, сумма заказа для доставки от 300 руб. Временной промежуток доставки +- 3 часа. Если Вам необходима доставка к определенному времени - сообщите об этом менеджеру при оформлении заказа. Доставка трехъярусных тортов и выше +1000 рублей к заказу, в силу сложности доставки подобных тортов. Время ожидания курьера на Вашей точке 15 минут, далее тарификация 100 руб за каждые 15 минут, убедительная просьба не опаздывать.</p>
+          <p style="font-size:14px;font-weight:300;"><strong style="margin-bottom:10px;">Доставка в пределах МКАД:</strong> 100 руб<br></p>
+          <p style="font-size:14px;font-weight:300;"><strong>Доставка по Бутово, Коммунарка, Теплый стан, Реутов, Люберцы, Троицк</strong>: 450 руб</p>
+          <p style="font-size:14px;font-weight:300;"><strong>За пределами МКАД: </strong>700 руб + 25 руб/км</p>
+          <p style="font-size:14px;font-weight:300;"><strong>Вы всегда можете воспользоваться услугами наших партнеров - курьерской службой Чекбокс, Достависта, Яндекс GO:</strong>от 500 - до 1500 руб, в зависимости от рассположения. Ответственность за перевозку переносится на заказчика.</p>
+          <p style="margin-bottom:10px; margin-top:10px;"><strong><span style="color: rgb(128, 100, 162); font-size: 20px;margin-bottom:10px;">Оплата:</span></strong></p>
+          <p id="anchor" style="font-size:14px;font-weight:300;">Оплата осуществляется любым удобным для Вас способом: наличными, безналичными на сайте, оплата по счету.</p>
+        </div>
+      </div>
+    </div>
+  <div class="footer">
+    <div class="footer_wrap">
+      <div class="footer_card">
+        <div class="footer_card_title">
+          <h5>Компания</h5>
+        </div>
+        <div class="footer_card_link"><a th:href="@{/news}">Новости</a><a th:href="@{/}">Отзывы</a><a th:href="@{/contacts}">Контакты</a><a th:href="@{/credentials}">Реквизиты</a></div>
+      </div>
+      <div class="footer_card">
+        <div class="footer_card_title">
+          <h5>Информация</h5>
+        </div>
+        <div class="footer_card_link"><a th:href="@{/produce}">Производтства</a><a th:href="@{/delivery_and_pay}">Оплата</a><a th:href="@{/licenses_detail}">Политика</a></div>
+      </div>
+      <div class="footer_card">
+        <div class="footer_card_title">
+          <h5>Помощь</h5>
+        </div>
+        <div class="footer_card_link"><a th:href="@{/payment_conditions}">Условия оплаты</a><a th:href="@{/delivery_and_pay}">Условия доставки</a></div>
+      </div>
+    </div>
+    <div class="footer_social_wrap">
+      <hr><a class="img_one" href="https://vk.com"></a><a class="img_two" href="https://youtube.com"></a><a class="img_three" href="https://tiktok.com"></a>
+      <hr>
+    </div>
+    <div class="footer_copyright">
+      <p>2023 © Powered by Khasan Abdurakhmanov</p>
+      <div class="payment">
+        <div class="payment_one"></div>
+        <div class="payment_two"></div>
+        <div class="payment_three"></div>
+      </div>
+    </div>
+  </div>
+  </body>
+</html>

@@ -1,0 +1,116 @@
+.wrap_cards{
+    width: 900px;
+    margin: 0 auto;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.card{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    transition: all .3s ease-in-out;
+    margin-top: 10px;
+    border: 1px solid #ececec;
+}
+
+.iframs{
+    width: 900px;
+    margin: 25px auto;
+}
+
+.card:hover{
+    -webkit-box-shadow: 2px 4px 8px 0px rgba(22, 142, 234, 0.2);
+    -moz-box-shadow: 2px 4px 8px 0px rgba(22, 142, 234, 0.2);
+    box-shadow: 2px 4px 8px 0px rgba(22, 142, 234, 0.2);
+}
+
+
+.card_img{
+    max-width: 100%;
+    height: auto;
+    flex-shrink: 0;
+}
+
+.card_img img{
+    width: 100%;
+    height: 100%;
+}
+
+.card_place_time{
+    height: 100%;
+    /*  */
+    font-family: 'Roboto', sans-serif;
+    font-weight: 300;
+    font-size: 14px;
+    line-height: 1.454em;
+    padding: 10px;
+    transition: all .5s ease-in-out;
+}
+
+.card_place_time>a{
+    text-decoration: none;
+    
+}
+
+
+
+.card_place_time>span{
+    display: block;
+}
+
+.card_place_time>span:nth-child(2){
+    display: inline-block;
+}
+
+.card_place_time>span:nth-child(3)::before{
+    display: inline-block;
+    content:'';
+    width: 25px; 
+    height: 25px;
+    background-image: url('../../Icons/time.svg');
+    background-size: contain;
+    background-repeat:no-repeat;
+    vertical-align: middle;
+    margin-right: 5px;
+}
+
+.darken {
+    color: #333;
+}
+
+.card_phone{
+    padding: 10px;
+    height: 100%;
+    flex-shrink: 0;
+}
+
+.card_phone>a{
+    display: block;
+    text-decoration: none;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 300;
+    font-size: .933em;
+    line-height: 1.501em;
+}
+
+.black {
+    color: #333;
+}
+
+.card_email{
+    padding: 10px;
+    height: 100%;
+}
+
+.card_email>a{
+    text-decoration: none;
+    font-size: .933em;
+    line-height: 1.501em;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 300;
+    color: #333;
+}

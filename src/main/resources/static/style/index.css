@@ -1,0 +1,601 @@
+.famous_cakes{
+    width: 900px;
+    height: 100%;
+    /* border:1px solid black; */
+    margin-top: 60px;
+}
+
+.cakes_wrap{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction:row;
+    justify-content: space-between;
+    align-items:center;
+    /* border:1px solid red; */
+}
+
+.cake_card{
+    position: relative;
+    width: 280px;
+    height: 230px;
+    /* border:2px solid yellow; */
+}
+
+.cake_card_st{
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 3;
+    width: 100%;
+    height: 100%;
+    /* background-color: blue; */
+    color: black;
+    text-align: center;
+    /* line-height: 200px; */
+    cursor: default;
+
+}
+
+
+.cake_card_img{
+    width: 100%;
+    height: 186px;
+
+}
+
+.cake_card_img img{
+    width: 100%;
+    height: 100%;
+    object-position: center;
+    object-fit: cover;
+    border-radius: 5px;
+}
+
+.cake_card_title{
+    font-family: 'Libre Baskerville', serif;
+    font-size: 22px;
+    font-weight: 500;
+    /* margin-top: 3px !important; */
+    text-transform: capitalize;
+}
+
+/* Second layer */
+.cake_card_nd {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 2;
+    width: 100%;
+    height: 100%;
+    /* background-color: green; */
+    color: black;
+    text-align: center;
+    /* line-height: 200px; */
+    display: none;
+    cursor: default;
+    /* overflow: hidden; */
+}
+
+.cake_card_nd:hover img {
+    filter: brightness(60%);
+}
+
+.cake_card_nd img{
+    max-height:186px;
+    width: 100%;
+    object-fit: cover;
+    transition: all 0.3s ease-in-out;
+    border-radius:5px;
+}
+
+.cake_card__title{
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 3; /*Поверх картинки */
+    /* background-color: rgba(255, 255, 255, 0.8); Непрозрачный фон */
+    white-space: nowrap;
+    margin-top: 15px;
+    width: 100%;
+    font-family: 'Libre Baskerville', serif;
+    font-size: 18px;
+    font-weight: bold;
+    color:white;
+    /* overflow-wrap:break-word;
+    word-wrap: break-word; */
+    /* white-space:break-spaces; */
+    
+}
+
+.cake_card__text{
+    position: absolute;
+    width: 100%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 3;
+    /* background-color: rgba(255, 255, 255, 0.8); Непрозрачный фон */
+    /* margin-top: -62px; */
+    /* margin-top: 25px !important; */
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 16px;
+    font-weight:300;
+    line-height: 1.4;
+    color:white;
+}
+
+.cake_card__text p{
+    /* border:1px solid red; */
+    width:100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items:center;
+    margin-left: 10px;
+   
+}
+
+.cake_card__text span{
+    margin-left:0px;
+    margin-right: 20px;
+}
+
+/* Third layer */
+.cake_card_rd{
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 2;
+    width: 100%;
+    height: 100%;
+    /* background-color: green; */
+    color: black;
+    text-align: center;
+    /* line-height: 200px; */
+    display: none;
+    cursor:default;
+    overflow: hidden;
+}
+
+.cake_card_rd:hover img {
+    filter: brightness(60%);
+}
+
+.cake_card_rd img{
+    max-height:186px;
+    width: 100%;
+    object-fit: cover;
+    transition: all 0.3s ease-in-out;
+    border-radius:5px;
+}
+/* Fourth layer */
+
+.cake_card_th{
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 2;
+    width: 100%;
+    height: 100%;
+    /* background-color: green; */
+    color: black;
+    text-align: center;
+    /* line-height: 200px; */
+    display: none;
+    cursor: default;
+    overflow: hidden;
+}
+
+.cake_card_th:hover img {
+    filter: brightness(60%);
+}
+
+.cake_card_th img{
+    max-height:186px;
+    width: 100%;
+    object-fit: cover;
+    transition: all 0.3s ease-in-out;
+    border-radius:5px;
+}
+
+.famous_cakes_title {
+    font-family: 'Open Sans';
+    font-style: normal;
+    font-weight: 300;
+    font-size: 36px;
+    text-align: center;
+    /* background: linear-gradient(.25turn,rgba(213, 151, 101, 1),rgba(245, 233, 196, 0.5)); */
+    background: linear-gradient(0deg, rgba(213, 151, 101, 0.9), rgba(213, 151, 101, 0.9)),
+    linear-gradient(0deg, rgba(245, 233, 196, 0.5), rgba(245, 233, 196, 0.5));
+    text-shadow:0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-top:30px;
+}
+/* Cakes card css ends HERE!!!! */
+/* ------------------------------ */
+/* Video Lesson CSS starts HERE!!! */
+
+.video_lesson{
+    width: 900px;
+    height: 100%;
+    /* border: 1px solid blue; */
+    margin-top: 84px;
+}
+
+.video_lesson_wrap{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    /* vertical-align:middle; */
+    gap:30px;
+    /* border: 2px solid red; */
+}
+
+.video_lesson_title{
+    margin: 0 auto;
+    font-family: 'Open Sans';
+    font-style: italic;
+    font-weight: bold;
+    font-size: 36px;
+    text-align: center;
+    /* background: linear-gradient(25turn,rgba(213, 151, 101, 1),rgba(245, 233, 196, 0.5)); */
+    background: linear-gradient(0deg, rgba(213, 151, 101, 0.9), rgba(213, 151, 101, 0.9)),
+    linear-gradient(0deg, rgba(245, 233, 196, 0.6), rgba(245, 233, 196, 0.6));
+    text-shadow:0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.video_lesson_content{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items:flex-start;
+    /* border: 1px solid teal; */
+}
+
+.video_lesson_video{
+    max-width: 535px;
+    max-height:500px;
+}
+
+.video_lesson_video video{
+    width: 100%;
+    height: 100%;
+    /* border-radius:5px; */
+}
+
+.video_lesson_theory{
+    /* width: 100%; */
+    /* align-items:flex-start; */
+    height:100%;
+    /* border:1px solid red; */
+}
+
+.itcss__item__title{
+    font-family: 'Libre Baskerville', serif;
+    font-size: 24px;
+    font-weight: bold;
+    text-align: center;
+    /* background: linear-gradient(25turn,rgba(213, 151, 101, 1),rgba(245, 233, 196, 0.5)); */
+    background: linear-gradient(0deg, rgba(3, 3, 3, 0.4), rgba(3, 3, 3, 0.4)),
+    linear-gradient(0deg, #D9D9D9, #D9D9D9),
+    linear-gradient(0deg, rgba(237, 138, 29, 0.24), rgba(237, 138, 29, 0.24));
+    text-shadow:0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.itcss__item ul{
+    list-style-type: decimal;
+}
+
+.itcss__item ul li{
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 16px;
+    font-weight: 300;
+    font-style: italic;
+    margin-top: 10px;
+}
+/* Video_Lesson finished HERE!!! */
+/* ----------------------------- */
+/* Popular Category Cakes starts HERE!!! */
+
+.popular_category{
+    width: 900px;
+    height: 100%;
+    /* border:1px solid black; */
+    padding:30px 0px 30px 0px;
+}
+
+.popular_category_wrap{
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap:30px;
+    align-items:flex-start;
+}
+
+.popular_category_title{
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 30px;
+    font-weight: bold;
+    font-style: normal;
+    text-transform: uppercase;
+    text-align: center;
+    color:#000000;
+    transition: all .4s ease-in-out;
+}
+
+.popular_category_title:hover{
+    color:rgba(152, 83, 9, 0.9);
+    box-shadow: 0px 2px 4px 0px rgba(255, 254, 251, 1);
+    filter: drop-shadow(0px 2px 4px #FFFEFB);
+}
+
+.popular_category_card_wrap{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items:flex-start;
+}
+
+.popular_category_card{
+    font-family: 'Libre Baskerville', serif;
+    font-size: 16px;
+    font-weight: 300;
+    font-style: normal;
+    max-width: 170px;
+    max-height: 170px;
+}
+
+.popular_category_card img{
+    position: relative;
+    width: 100%;
+    height: 100%;
+    border-radius:5px;
+}
+
+/* Popular Category Cakes ends HERE!!! */
+/* ----------------------------------- */
+/* What We Offer section starts HERE!!! */
+
+.what_we_offer{
+    height: 100%;
+    width: 900px;
+    /* border:1px solid black; */
+    margin-top: 40px;
+    margin-bottom: 80px;
+    border-top: 0.5px solid gray;
+    padding-top: 60px;
+}
+
+.what_we_offer_wrap{
+    width: 100%;
+    height: 160px;
+    display:flex;
+    flex-direction:row;
+    justify-content: space-between;
+    align-items:flex-start;
+    /* border:1px solid yellow; */
+}
+
+.offer_card{
+    max-width: 175px;
+    height:100%;
+    display: flex;
+    flex-direction: column;
+    /* justify-content: space-around; */
+    /* align-items */
+    /* border:0.5px solid black; */
+    box-shadow: 0px 8px 8px 0px rgba(0, 0, 0, 0.25);
+    /* padding:0px 5px 0px 5px; */
+    /* flex-grow: 1; */
+    /* align-items: stretch; */
+    transition: all 0.5s ease-in-out;
+}
+
+.offer_card:hover{
+    transform: translateY(-10px);
+}
+
+.offer_card_img{
+    max-width: 32px;
+    max-height: 32px;
+    /* border:1px solid green; */
+    margin-bottom: 10px;
+    margin-top: 5px;
+}
+
+.offer_card_img:hover{
+    width: 100%;
+    height: 100%;
+}
+
+.offer_card_title{
+    font-size: 14px;
+    text-align: center;
+    text-transform: uppercase;
+    /* white-space: nowrap; */
+    margin-bottom: 5px;
+}
+
+.offer_card_descr{
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 14px;
+    text-align:center;
+    font-weight: normal;
+    padding-right: 5px;
+    padding-left: 5px;
+}
+
+/* What We Offer ends HERE!!! */
+/* ------------------------- */
+/* Production section start HERE!!! */
+
+.production{
+    margin-top: 50px;
+    width: 900px;
+    height: 100%;
+    /* border:1px solid green; */
+}
+
+.production_title{
+    font-family: 'Libre Baskerville', serif;
+    font-size: 24px;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 10px;
+    transition: all .3s ease-in-out;
+    text-transform: capitalize;
+}
+
+.production_title:hover{
+    color:rgba(152, 83, 9, 0.9);
+  
+}
+
+
+.production_card_img{
+    max-width: 144px;
+    max-height: 144px;
+    margin-bottom:10px;
+    margin-right: 10px;
+    margin-left: 10px;
+}
+
+.production_card_img img{
+    width: 100%;
+    height: 100%;
+    /* border:1px solid yellow; */
+}
+
+.production_card_title{
+    font-family: 'Libre Baskerville', serif;
+    font-size: 18px;
+    font-weight: 300;
+    text-align:left;
+    /* font-weight: 400; */
+    margin-bottom:10px;
+    margin-left: 10px;
+    /* border:1px solid red; */
+}
+
+.production_card_price{
+    /* width: 100%; */
+    font-size: 20px;
+    font-weight: bold;
+    text-align: left;
+    /* border:1px solid red; */
+    margin-bottom: 15px;
+    margin-left: 10px;
+}
+
+.production_card_wrap_img{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    /* border:1px solid red; */
+    margin-bottom: 20px;
+}
+
+.production_card_wrap_img a{
+    cursor:default;
+}
+
+.production_card_basket{
+    /* border:1px solid red; */
+    margin-left: 10px;
+}
+
+.production_card_heart{
+    /* border:1px solid red; */
+    margin-right: 10px;
+}
+
+/* Production section ends HERE !!! */
+/* -------------------------------- */
+/* Advantage section starts HERE!!! */
+
+.advantages{
+    width: 900px;
+    height: 100%;
+    margin-top: 50px;
+    margin-bottom: 50px;
+}
+
+.advantages_wrap{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items:flex-start;
+    /* border:1px solid red; */
+}
+
+.advantage_card{
+    max-width:200px;
+    max-height:200px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    /* border:1px solid black; */
+    transition: all 0.5s ease-in-out;
+}
+
+.advantage_card:hover{
+    
+    /* box-shadow: 10px 5px 5px red; */
+    box-shadow: 2px 2px 1px 1px rgba(10, 2, 238, 0.25);
+}
+
+.advantage_card_img{
+    max-width: 40px;
+    max-height: 40px;
+    margin-bottom: 10px;
+}
+
+.advantage_card_img img{
+    height: 100%;
+    width: 100%;
+}
+
+.advantage_card_title{
+    width: 100%;
+    text-align: center;
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 5px;
+    font-family: 'Libre Baskerville', serif;
+}
+
+.advantage_card_descr{
+    width: 100%;
+    text-align: center;
+    font-size: 14px;
+    font-weight: 300;
+    font-family: 'Libre Baskerville', serif;
+}
+/* Advantage section ends HERE!!! */
+/* ----------------------------- */
+.pr:after {
+	content: ' \20BD';
+}
+/* THE END */
+
+

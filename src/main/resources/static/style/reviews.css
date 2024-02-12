@@ -1,0 +1,108 @@
+.koguvcavis-varazdel {
+    padding: 38px 0;
+    /* background: #adadad; */
+    color: #2f2f2f;
+    text-align: center;
+}
+.sestim-donials{
+    max-width: 1200px;
+    margin: auto;
+    overflow: hidden;
+    padding: 0 20px;
+
+}
+
+.zamas{
+    margin: 0 auto;
+    font-family: 'Open Sans';
+    font-style: italic;
+    font-weight: bold;
+    font-size: 24px;
+    text-align: center;
+    /* background: linear-gradient(25turn,rgba(213, 151, 101, 1),rgba(245, 233, 196, 0.5)); */
+    background: linear-gradient(0deg, rgba(213, 151, 101, 0.9), rgba(213, 151, 101, 0.9)), linear-gradient(0deg, rgba(245, 233, 196, 0.6), rgba(245, 233, 196, 0.6));
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+  
+.sectionesag {
+    width: 195px;
+    height: 3px;
+    background: #498a2d;
+    /* background: gold; */
+    margin: 23px auto;
+}
+  
+.sagestim-lonials{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: stretch;
+}
+.vemotau-vokusipol{
+    flex: 33.33%;
+    max-width: 33.33%;
+    box-sizing: border-box;
+    padding: 15px;
+}
+.testimonial {
+    /* background: #f9f4f4; */
+    /* background: rgb(58,79,180); */
+    background: #fff;
+    /* background: linear-gradient(97deg, rgba(58,79,180,0.8838120928462248) 0%, rgba(253,29,29,1) 50%, rgba(231,141,14,0.8682841425356658) 100%); */
+    padding: 28px;
+    /* border:1px solid #ddd; */
+}
+.testimonial img{
+    width: 100%;
+    height: 100%;
+
+}
+
+.ramka{
+    width: 100px;
+    height: 100px;
+    overflow: hidden;
+    border-radius: 50%;
+}
+
+
+.gecedanam{
+    font-family: 'Inspiration', cursive;
+    font-weight: 300;
+    font-size: 40px;
+    text-transform: capitalize;
+    margin: 20px 0;
+    transition: all .3s ease-in-out;
+}
+
+.gecedanam:hover{
+    color:#ca5d05;
+}
+
+.apogered-gselected{
+    /* color: #53b32b; */
+    color:gold;
+    margin-bottom: 20px;
+}
+
+.testimonial>p{
+    font-family: 'Roboto', sans-serif;
+    font-weight: 300;
+    font-size: 14px;
+}
+
+@media screen and (max-width:960px) {
+.vemotau-vokusipol{
+    flex: 100%;
+    max-width: 80%;
+}
+}
+  
+@media screen and (max-width:600px) {
+.vemotau-vokusipol{
+    flex: 100%;
+    max-width: 100%;
+}
+}

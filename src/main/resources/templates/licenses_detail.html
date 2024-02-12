@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" th:href="@{/style/header.css}">
+    <link rel="stylesheet" th:href="@{/style/footer.css}">
+    <link rel="stylesheet" th:href="@{/style/licenses_detail.css}">
+    <link rel="icon" th:href="@{/Icons/fav/0.gif}">
+    <link rel="shortcut icon" th:href="@{/Icons/fav/0.gif}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,600;1,700&amp;family=Dancing+Script:wght@400;500;600;700&amp;family=Inspiration&amp;family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&amp;family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&amp;display=swap" rel="stylesheet">
+    <title>CakeStudio</title>
+    <script th:src="@{/JS/circletype.min.js}" preload></script>
+    <script defer th:src="@{/JS/header.js}"></script>
+    <script src="https://code.jquery.com/jquery-3.6.4.slim.js" integrity="sha256-dWvV84T6BhzO4vG6gWhsWVKVoa4lVmLnpBOZh/CAHU4=" crossorigin="anonymous"></script>
+    <script src="https://cdn.lordicon.com/ritcuqlt.js"></script>
+    <script th:src="@{/JS/update_page.js}"></script>
+  </head>
+  <body>
+  <header>
+    <div class="header_wrapper">
+      <div class="header_logo"><img th:src="@{/Logo/Photographer-Arranging.svg}" alt="Logo"><a href="/" id="logo_text">Cake of your dreams</a></div>
+      <div class="header_menu">
+        <div class="header_menu_category">
+          <ul>
+            <li><a th:href="@{/news}">новости</a></li>
+            <li><a th:href="@{/production}">продукция</a></li>
+            <li><a th:href="@{/o_nas}">о нас</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="auth_wrapper">
+        <div class="dropdown">
+          <lord-icon class="dropdown-toggle" src="https://cdn.lordicon.com/ajkxzzfb.json" trigger="morph" colors="primary:#ffc738,secondary:#4bb3fd" state="morph-group" style="width:40px;height:40px"></lord-icon>
+          <div class="dropdown-content">
+            <div class="dropdown-content-wrapper">
+              <div class="dropdown-content-item" th:if="${is_auth==false || is_auth==null}"><a class="sign-in" th:href="@{/login}">Войти</a><a class="join-in" th:href="@{/registration}">Регистрация</a></div>
+              <div class="dropdown-content-item" th:if="${is_auth==true}"><a class="sign-in" th:text="${auth_name}"></a></div>
+              <div class="dropdown-content-item"><img class="close-icon" th:src="@{/Icons/close.png}" alt="close"></div>
+            </div>
+            <div class="dropdown-content-wrapper_info">
+              <div class="dropdown-content-wrapper_info_all"><img class="hover_img" th:src="@{/Icons/my_account_WB.png}" alt="My Account"><a class="hover_text" th:href="@{/my_account}" target="_blank">мой аккаунт</a></div>
+            </div>
+            <div class="dropdown-content-wrapper_info">
+              <div class="dropdown-content-wrapper_info_all"><img class="hover_img" th:src="@{/Icons/wedding_cake.png}" alt="My Orders"><a class="hover_text" th:href="@{/my_orders}" target="_blank">мои заказы</a></div>
+            </div>
+            <div class="dropdown-content-wrapper_info">
+              <div class="dropdown-content-wrapper_info_all"><img class="hover_img" th:src="@{/Icons/credit-card.png}" alt="Payment"><a class="hover_text" th:href="@{/payment_method}" target="_blank">Оплата</a></div>
+            </div>
+            <div class="dropdown-content-wrapper_info">
+              <div class="dropdown-content-wrapper_info_all"><img class="hover_img" th:src="@{/Icons/sms.png}" alt="Contact Preferences"><a class="hover_text" th:href="@{/contact_preferences}" target="_blank">Контакты</a></div>
+            </div>
+          </div>
+        </div>
+        <div class="drop">
+          <lord-icon class="drop-toggle" src="https://cdn.lordicon.com/lpddubrl.json" trigger="hover" style="width:40px;height:40px" th:onclick="|window.location.href='/to-basket'|"></lord-icon>
+          <span class="circle_basket_counter" th:if="${not #lists.isEmpty(cart_item)}" th:text="${cart_item.size()}"></span>
+          <div class="drop-content" th:if="${not #lists.isEmpty(cart_item)}">
+            <div class="drop_wrap_st">
+              <div class="drop_wrap_title">
+                <p>Моя корзина,</p><span th:text="${cart_item.size()}+' шт'"></span>
+              </div>
+              <div class="drop_wrap_icon"><img class="close-ico" th:src="@{/Icons/close.png}" alt="close"></div>
+            </div>
+            <div class="drop_wrap_nd">
+              <th:block th:each="item: ${cart_item}">
+                <div style="display:flex; flex-direction:row;margin:0px 0px 10px 0px;padding-right:10px;">
+                  <div class="purchase_img_wrap"><img th:src="@{${item.getProduct().getImage()}}" th:alt="${item.getProduct().getName()}"></div>
+                  <div class="purchase_text_wrap">
+                    <p th:text="'₽ '+${item.getProduct().getPrice()}"></p>
+                    <p th:text="${item.getProduct().getName()}"></p>
+                    <p class="item_description"><a th:href="@{'/item/'+${item.getProduct().getId()}}" th:text="${item.getProduct().getDescription()}" style="all:unset;cursor:default;"></a></p>
+                    <p>Количество:<span th:text="${item.getQuantity()}"></span></p>
+                    <div class="purchase_icon_wrap">
+                      <a th:href="@{'/basket/delete?productId='+${item.getProduct().getId()}}"><lord-icon class="trash_icon" src="https://cdn.lordicon.com/jmkrnisz.json" trigger="hover" colors="primary:#c71f16" state="hover-empty" style="width:20px;height:20px">
+                      </lord-icon></a>
+                    </div>
+                  </div>
+                </div>
+              </th:block>
+            </div>
+            <div class="drop_wrap_rd">
+              <div class="sub_total_wrap"><span class="sub_total_wrap_title">Итого</span><span class="sub_total_wrap_price" th:text="'₽ '+ ${total_price}"></span></div>
+            </div>
+            <div class="drop_wrap_th">
+              <p class="button_view_bag"><a th:href="@{/to-basket}">В корзину</a></p>
+              <p class="button_checkout_bag"><a th:href="@{/order/proverka}">Оформить</a></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+    <div class="wraps hover_none" id="content">
+      <!-- title_content-->
+      <div class="top-block-wrapper">
+        <section class="page-top maxwidth-theme">
+          <div class="topic">
+            <div class="topic__inner">
+              <div class="topic__heading">
+                <h1 id="pagetitle">Соглашение на обработку персональных данных</h1>
+              </div>
+            </div>
+          </div>
+          <div id="navigation">
+            <div class="breadcrumbs swipeignore" itemscope="" itemtype="http://schema.org/BreadcrumbList">
+              <div class="breadcrumbs__item cat_last" id="bx_breadcrumb_0" itemprop="itemListElement" itemscope="" itemtype="http://schema.org/ListItem"><a class="breadcrumbs__link" th:href="@{/}" title="Главная" itemprop="item"><span class="breadcrumbs__item-name font_xs" itemprop="name">Главная</span>
+                  <meta itemprop="position" content="1"></a></div>
+            </div>
+          </div>
+        </section>
+      </div>
+      <!-- end-title_content-->
+      <div class="wrapper_inner">
+        <div class="container_inner clearfix">
+          <div class="right_block wide_Y">
+            <div class="middle">
+              <div class="container">
+                <p class="first_child">Настоящим в соответствии с Федеральным законом № 152-ФЗ «О персональных данных» от 27.07.2006 года Вы подтверждаете свое согласие на обработку компанией CakeStudio персональных данных: сбор, систематизацию, накопление, хранение, уточнение (обновление, изменение), использование, передачу исключительно в целях продажи программного обеспечения на Ваше имя, как это описано ниже, блокирование, обезличивание, уничтожение.</p>
+                <p>Компания CakeStudio гарантирует конфиденциальность получаемой информации. Обработка персональных данных осуществляется в целях эффективного исполнения заказов, договоров и иных обязательств, принятых компанией CakeStudio в качестве обязательных к исполнению.</p>
+                <p>В случае необходимости предоставления Ваших персональных данных правообладателю, дистрибьютору или реселлеру программного обеспечения в целях регистрации программного обеспечения на ваше имя, вы даёте согласие на передачу ваших персональных данных. Компания CakeStudio гарантирует, что правообладатель, дистрибьютор или реселлер программного обеспечения осуществляет защиту персональных данных на условиях, аналогичных изложенным в Политике конфиденциальности персональных данных.</p>
+                <p>Настоящее согласие распространяется на следующие Ваши персональные данные: фамилия, имя и отчество, адрес электронной почты, почтовый адрес доставки заказов, контактный телефон, платёжные реквизиты.</p>
+                <p>Срок действия согласия является неограниченным. Вы можете в любой момент отозвать настоящее согласие, направив письменное уведомления на адрес: <a href="mailto:order@CakeStudio.net">order@CakeStudio.net</a> с пометкой «Отзыв согласия на обработку персональных данных».</p>
+                <p>Обращаем ваше внимание, что отзыв согласия на обработку персональных данных влечёт за собой удаление Вашей учётной записи с Интернет-сайта (<a href="https://CakeStudio.ru">https://CakeStudio.ru</a>), а также уничтожение записей, содержащих ваши персональные данные, в системах обработки персональных данных компании CakeStudio, что может сделать невозможным пользование интернет-сервисами компании CakeStudio.</p>
+                <p>Гарантирую, что представленная мной информация является полной, точной и достоверной, а также что при представлении информации не нарушаются действующее законодательство Российской Федерации, законные права и интересы третьих лиц. Вся представленная информация заполнена мною в отношении себя лично.</p>
+                <p>Настоящее согласие действует в течение всего периода хранения персональных данных, если иное не предусмотрено законодательством Российской Федерации.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  <div class="footer">
+    <div class="footer_wrap">
+      <div class="footer_card">
+        <div class="footer_card_title">
+          <h5>Компания</h5>
+        </div>
+        <div class="footer_card_link"><a th:href="@{/news}">Новости</a><a th:href="@{/}">Отзывы</a><a th:href="@{/contacts}">Контакты</a><a th:href="@{/credentials}">Реквизиты</a></div>
+      </div>
+      <div class="footer_card">
+        <div class="footer_card_title">
+          <h5>Информация</h5>
+        </div>
+        <div class="footer_card_link"><a th:href="@{/produce}">Производтства</a><a th:href="@{/delivery_and_pay}">Оплата</a><a th:href="@{/licenses_detail}">Политика</a></div>
+      </div>
+      <div class="footer_card">
+        <div class="footer_card_title">
+          <h5>Помощь</h5>
+        </div>
+        <div class="footer_card_link"><a th:href="@{/payment_conditions}">Условия оплаты</a><a th:href="@{/delivery_and_pay}">Условия доставки</a></div>
+      </div>
+    </div>
+    <div class="footer_social_wrap">
+      <hr><a class="img_one" href="https://vk.com"></a><a class="img_two" href="https://youtube.com"></a><a class="img_three" href="https://tiktok.com"></a>
+      <hr>
+    </div>
+    <div class="footer_copyright">
+      <p>2023 © Powered by Khasan Abdurakhmanov</p>
+      <div class="payment">
+        <div class="payment_one"></div>
+        <div class="payment_two"></div>
+        <div class="payment_three"></div>
+      </div>
+    </div>
+  </div>
+  </body>
+</html>

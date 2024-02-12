@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" th:href="@{'/style/header.css'}">
+    <link rel="stylesheet" th:href="@{'/style/footer.css'}">
+    <link rel="stylesheet" th:href="@{'/style/item.css'}">
+    <link rel="icon" th:href="@{/Icons/fav/0.gif}">
+    <link rel="shortcut icon" th:href="@{/Icons/fav/0.gif}">
+    <link rel="stylesheet" th:href="@{/style/index.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/style/slick.css}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,600;1,700&amp;family=Dancing+Script:wght@400;500;600;700&amp;family=Inspiration&amp;family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&amp;display=swap" rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <title>CakeStudio</title>
+    <script th:src="@{/JS/circletype.min.js}" preload></script>
+    <script src="https://code.jquery.com/jquery-3.6.4.slim.js" integrity="sha256-dWvV84T6BhzO4vG6gWhsWVKVoa4lVmLnpBOZh/CAHU4=" crossorigin="anonymous"></script>
+    <script defer th:src="@{/JS/header.js}"></script>
+    <script src="https://cdn.lordicon.com/ritcuqlt.js"></script>
+    <script th:src="@{/JS/update_page.js}"></script>
+  </head>
+  <body>
+  <header>
+    <div class="header_wrapper">
+      <div class="header_logo"><img th:src="@{/Logo/Photographer-Arranging.svg}" alt="Logo"><a href="/" id="logo_text">Cake of your dreams</a></div>
+      <div class="header_menu">
+        <div class="header_menu_category">
+          <ul>
+            <li><a th:href="@{/news}">новости</a></li>
+            <li><a th:href="@{/production}">продукция</a></li>
+            <li><a th:href="@{/o_nas}">о нас</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="auth_wrapper">
+        <div class="dropdown">
+          <lord-icon class="dropdown-toggle" src="https://cdn.lordicon.com/ajkxzzfb.json" trigger="morph" colors="primary:#ffc738,secondary:#4bb3fd" state="morph-group" style="width:40px;height:40px"></lord-icon>
+          <div class="dropdown-content">
+            <div class="dropdown-content-wrapper">
+              <div class="dropdown-content-item" th:if="${is_auth==false || is_auth==null}"><a class="sign-in" th:href="@{/login}">Войти</a><a class="join-in" th:href="@{/registration}">Регистрация</a></div>
+              <div class="dropdown-content-item" th:if="${is_auth==true}"><a class="sign-in" th:text="${auth_name}"></a></div>
+              <div class="dropdown-content-item"><img class="close-icon" th:src="@{/Icons/close.png}" alt="close"></div>
+            </div>
+            <div class="dropdown-content-wrapper_info">
+              <div class="dropdown-content-wrapper_info_all"><img class="hover_img" th:src="@{/Icons/my_account_WB.png}" alt="My Account"><a class="hover_text" th:href="@{/my_account}" target="_blank">мой аккаунт</a></div>
+            </div>
+            <div class="dropdown-content-wrapper_info">
+              <div class="dropdown-content-wrapper_info_all"><img class="hover_img" th:src="@{/Icons/wedding_cake.png}" alt="My Orders"><a class="hover_text" th:href="@{/my_orders}" target="_blank">мои заказы</a></div>
+            </div>
+            <div class="dropdown-content-wrapper_info">
+              <div class="dropdown-content-wrapper_info_all"><img class="hover_img" th:src="@{/Icons/credit-card.png}" alt="Payment"><a class="hover_text" th:href="@{/payment_method}" target="_blank">Оплата</a></div>
+            </div>
+            <div class="dropdown-content-wrapper_info">
+              <div class="dropdown-content-wrapper_info_all"><img class="hover_img" th:src="@{/Icons/sms.png}" alt="Contact Preferences"><a class="hover_text" th:href="@{/contact_preferences}" target="_blank">Контакты</a></div>
+            </div>
+          </div>
+        </div>
+        <div class="drop">
+          <lord-icon class="drop-toggle" src="https://cdn.lordicon.com/lpddubrl.json" trigger="hover" style="width:40px;height:40px" th:onclick="|window.location.href='/to-basket'|"></lord-icon>
+          <span class="circle_basket_counter" th:if="${not #lists.isEmpty(cart_item)}" th:text="${cart_item.size()}"></span>
+          <div class="drop-content" th:if="${not #lists.isEmpty(cart_item)}">
+            <div class="drop_wrap_st">
+              <div class="drop_wrap_title">
+                <p>Моя корзина,</p><span th:text="${cart_item.size()}+' шт'"></span>
+              </div>
+              <div class="drop_wrap_icon"><img class="close-ico" th:src="@{/Icons/close.png}" alt="close"></div>
+            </div>
+            <div class="drop_wrap_nd">
+              <th:block th:each="item: ${cart_item}">
+                <div style="display:flex; flex-direction:row;margin:0px 0px 10px 0px;padding-right:10px;">
+                  <div class="purchase_img_wrap"><img th:src="@{${item.getProduct().getImage()}}" th:alt="${item.getProduct().getName()}"></div>
+                  <div class="purchase_text_wrap">
+                    <p th:text="'₽ '+${item.getProduct().getPrice()}"></p>
+                    <p th:text="${item.getProduct().getName()}"></p>
+                    <p class="item_description"><a th:href="@{'/item/'+${item.getProduct().getId()}}" th:text="${item.getProduct().getDescription()}" style="all:unset;cursor:default;"></a></p>
+                    <p>Количество:<span th:text="${item.getQuantity()}"></span></p>
+                    <div class="purchase_icon_wrap">
+                      <a th:href="@{'/basket/delete?productId='+${item.getProduct().getId()}}"><lord-icon class="trash_icon" src="https://cdn.lordicon.com/jmkrnisz.json" trigger="hover" colors="primary:#c71f16" state="hover-empty" style="width:20px;height:20px">
+                      </lord-icon></a>
+                    </div>
+                  </div>
+                </div>
+              </th:block>
+            </div>
+            <div class="drop_wrap_rd">
+              <div class="sub_total_wrap"><span class="sub_total_wrap_title">Итого</span><span class="sub_total_wrap_price" th:text="'₽ '+ ${total_price}"></span></div>
+            </div>
+            <div class="drop_wrap_th">
+              <p class="button_view_bag"><a th:href="@{/to-basket}">В корзину</a></p>
+              <p class="button_checkout_bag"><a th:href="@{/order/proverka}">Оформить</a></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+    <div class="item_pg_wrapper">
+      <div class="item_pg_st_wrap">
+        <div class="item_pg_title">
+          <h1 th:text="${cartItem.get().getName()}"></h1>
+        </div>
+        <div class="item_pg_social">
+          <ul class="list_direction_horizontal">
+            <li class="item_service_vkontakte"><a href="https://vk.com/share.php?url=https%3A%2F%2Fxn--90aijvkcjc.xn--p1ai%2F1493%2F&amp;title=%D0%A1%D0%BD%D0%B5%D0%B3%D0%BE%D0%B2%D0%B8%D0%BA&amp;utm_source=share2" title="ВКонтакте" target="_blank"></a></li>
+            <li class="item_service_odnoklassniki"><a href="https://connect.ok.ru/offer?url=https%3A%2F%2Fxn--90aijvkcjc.xn--p1ai%2F1493%2F&amp;title=%D0%A1%D0%BD%D0%B5%D0%B3%D0%BE%D0%B2%D0%B8%D0%BA&amp;utm_source=share2" title="Одноклассники" target="_blank"></a></li>
+            <li class="item_service_moimir"><a href="https://connect.mail.ru/share?url=https%3A%2F%2Fxn--90aijvkcjc.xn--p1ai%2F1493%2F&amp;title=%D0%A1%D0%BD%D0%B5%D0%B3%D0%BE%D0%B2%D0%B8%D0%BA&amp;utm_source=share2" title="Мой Мир" target="_blank"></a></li>
+            <li class="item_service_twitter"><a href="https://twitter.com/intent/tweet?text=%D0%A1%D0%BD%D0%B5%D0%B3%D0%BE%D0%B2%D0%B8%D0%BA&amp;url=https%3A%2F%2Fxn--90aijvkcjc.xn--p1ai%2F1493%2F&amp;utm_source=share2" title="Twitter" target="_blank"></a></li>
+            <li class="item_service_whatsapp"><a href="https://api.whatsapp.com/send?utm_source=share2&amp;text=%D0%9E%D0%B1%D1%8F%D0%B7%D0%B0%D1%82%D0%B5%D0%BB%D1%8C%D0%BD%D0%BE%20%D0%BE%D1%82%D0%BF%D1%80%D0%B0%D0%B2%D1%8C%D1%82%D0%B5%20%D1%8D%D1%82%D0%BE%20%D1%81%D0%BE%D0%BE%D0%B1%D1%89%D0%B5%D0%BD%D0%B8%D0%B5%20%D0%B8%20%D0%B4%D0%BE%D0%B6%D0%B4%D0%B8%D1%82%D0%B5%D1%81%D1%8C%20%D0%BE%D1%82%D0%B2%D0%B5%D1%82%D0%B0.%20%D0%92%D0%B0%D1%88%20%D0%BD%D0%BE%D0%BC%D0%B5%D1%80:%20317197" title="WhatsApp" target="_blank"></a></li>
+            <li class="item_service_telegram"><a href="https://t.me/share/url?url=https%3A%2F%2Fxn--90aijvkcjc.xn--p1ai%2F1493%2F&amp;text=%D0%A1%D0%BD%D0%B5%D0%B3%D0%BE%D0%B2%D0%B8%D0%BA&amp;utm_source=share2" title="Telegram" target="_blank"></a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="item_pg_nd_wrap">
+        <div class="container">
+          <div class="slider"><img class="active" th:src="@{${cartItem.get().getImage()}}"></div>
+          <nav class="slider-nav">
+            <ul>
+              <li class="arrow">
+                <button class="previous"><span><i class="ion-arrow-left-c"></i></span></button>
+              </li>
+              <li class="arrow">
+                <button class="next"><span><i class="ion-arrow-right-c"></i></span></button>
+              </li>
+            </ul>
+          </nav>
+        </div>
+        <div class="item_pg_sidebar_inner">
+          <form id="cart_form" th:action="@{'/basket/add?productId='+${cartItem.get().getId()}}" method="post">
+            <div class="item_sidebar_top">
+              <h3 class="item_sidebar_title" th:text="${cartItem.get().getName()}"></h3>
+              <div class="item_sidebar_price">
+                <div class="price_text">Цена за кг/шт</div>
+                <div class="price__wrapper">
+                  <div class="item_price"><span th:text="${cartItem.get().getPrice()}+' ₽'"></span></div>
+                </div>
+              </div>
+            </div>
+            <div class="item_sidebar_stock">
+              <div class="sidebar_stock_wrapper">
+                <div class="msgorder">
+                  <div class="msgorder_label">Заказать через:</div>
+                  <div class="msgorder_share"><a class="share_link_m" href="https://wa.me/79613815648" target="_blank">
+                      <svg class="share_img_m" height="48" viewBox="0 0 48 48" width="48" xmlns="http://www.w3.org/2000/svg">
+                        <g fill="none">
+                          <circle cx="24" cy="24" fill="#25d366" r="24"></circle>
+                          <path d="m24.791075 37.3525167h-.0059042c-2.3884662-.0008238-4.7353694-.6000892-6.8198226-1.737065l-7.5653482 1.9845483 2.0246147-7.3951554c-1.2488815-2.1643251-1.9060358-4.619358-1.9049649-7.1346003.0031307-7.8685509 6.4051674-14.2702443 14.2712879-14.2702443 3.8177013.00164768 7.400881 1.4878654 10.0952686 4.185411 2.6943875 2.6974084 4.1774472 6.2829224 4.175938 10.0960925-.0031593 7.8667659-6.4026557 14.2678003-14.2710693 14.2710132zm-6.475208-4.3206316.4331369.2570674c1.8211798 1.0807209 3.9087911 1.6525659 6.0372653 1.6533897h.0048058c6.5377653 0 11.8588478-5.321206 11.8614575-11.8616625.0012349-3.1694719-1.2313757-6.1495967-3.4708631-8.3916929-2.2394873-2.2420962-5.2176898-3.477453-8.385926-3.4785514-6.5428182 0-11.8639692 5.3206705-11.8665654 11.8606328-.000919 2.2412998.6261925 4.4240516 1.8135602 6.312567l.2820298.44879-1.1982837 4.37712zm13.66491-6.5567549c-.0891127-.1487454-.3267922-.2379816-.6833801-.4165364-.3565879-.1784725-2.1097317-1.0410253-2.4366611-1.1601396-.3267922-.1189496-.564609-.1783901-.8022885.1784724-.2376795.3569312-.9210595 1.160222-1.1290807 1.3982036-.208021.2379129-.416042.267791-.7724926.0892362-.3565879-.1784725-1.5055782-.5549837-2.8676286-1.7698816-1.0600698-.945569-1.7757172-2.113233-1.9837245-2.4702329-.2080073-.3569997-.0221751-.549917.1563385-.7277304.1604302-.1598261.3566153-.4165913.5348956-.6247497.1782802-.2081584.2377069-.3569998.3565741-.5948166.1188535-.2380914.0594405-.4462498-.0297271-.6247497-.0891401-.1784999-.8022747-1.9337033-1.0994222-2.6477029-.2894719-.6953259-.5834338-.6011328-.8023021-.6121175-.2077602-.0104353-.4457418-.0126322-.683435-.0126322-.2377069 0-.6240494.0892499-.9508965.4462497-.3268471.3569999-1.2480302 1.2197036-1.2480302 2.9747697 0 1.7552035 1.2777298 3.4508153 1.4560375 3.6887695.1782803.2380913 2.5144322 3.8397528 6.0915567 5.38434.8507581.3674215 1.5149151.5868253 2.0328395.7511414.8541907.2714709 1.6316265.2331621 2.2459408.1413033.685165-.1023355 2.1097317-.8625528 2.4070027-1.6954747.2969964-.8330865.2969964-1.5470449.2078838-1.6957216z" fill="#fdfdfd"></path>
+                        </g>
+                      </svg></a><a class="share_link_m" href="https://t.me/Khasan_Abdurakhmanov" target="_blank">
+                      <svg class="share_img_m" height="48" viewBox="0 0 48 48" width="48" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                        <lineargradient id="a" x1="66.67%" x2="41.67%" y1="16.67%" y2="75%">
+                          <stop offset="0" stop-color="#2daee4"></stop>
+                          <stop offset="1" stop-color="#0f95d7"></stop>
+                        </lineargradient>
+                        <g fill="none">
+                          <circle cx="24" cy="24" fill="url(#a)" r="24"></circle>
+                          <path d="m19.6 35c-.77752 0-.6454-.29358-.91356-1.0339l-2.28644-7.52492 17.6-10.44118" fill="#cae0ef"></path>
+                          <path d="m19.6 35c.6 0 .8651-.2744 1.2-.6l3.2-3.1116-3.9916-2.407" fill="#a7c6e0"></path>
+                          <path d="m20.008 28.882 9.672 7.1458c1.1037.60898 1.90028.29368 2.1752-1.0247l3.937-18.5526c.40308-1.61604-.61602-2.349-1.67188-1.86964l-23.118 8.9142c-1.57802.63294-1.56882 1.51332-.28764 1.9056l5.9326 1.85166 13.7346-8.665c.64838-.39318 1.24346-.181798.75504.25168" fill="#fff"></path>
+                        </g>
+                      </svg></a></div>
+                </div>
+              </div>
+            </div>
+            <div class="item_sidebar_options">
+              <select class="select_css" size="1" name="cream" required>
+                <option disabled="" selected>Выбрать начинку</option>
+                <option value="STUFFING_RAFFAELLO_PREMIUM">Раффаэлло <span>premium</span></option>
+                <option value="STUFFING_OREO_PREMIUM">Орео <span>premium</span></option>
+                <option value="STUFFING_MOUSSE_RASPBERRY_PREMIUM">Мусс-малина <span>premium</span></option>
+                <option value="STUFFING_PRAGUE_PREMIUM">Прага <span>premium.</span></option>
+                <option value="STUFFING_THREE_CHOCOLATES_PREMIUM">Три шоколада <span>premium</span></option>
+                <option value="STUFFING_TRUFFLE_PREMIUM">Трюфель <span>premium</span></option>
+                <option value="STUFFING_ESTERHAZY_PREMIUM">Эстерхази <span>premium</span></option>
+                <option value="STUFFING_MILK_GIRL_PREMIUM">Молочная девочка <span>premium</span></option>
+              </select>
+              <div id="nres">Выберите начинку (+0 руб.)</div>
+            </div>
+            <div class="item_sidebar_count">
+              <div class="count_text">Количество кг/шт</div>
+              <div class="count_form">
+                <div class="it_amount">
+                  <div class="it_amount_num" th:if="${not #lists.isEmpty(quantity)}">
+                    <input type="tel" name="quantity" th:value="${quantity.get(0).getQuantity()}">
+                    <div class="it_amount_inc_dec">
+                      <div class="it_amount_inc"></div>
+                      <div class="it_amount_dec"></div>
+                    </div>
+                  </div>
+                  <div class="it_amount_num" th:if="${#lists.isEmpty(quantity)}">
+                    <input type="tel" name="quantity" value="1">
+                    <div class="it_amount_inc_dec">
+                      <div class="it_amount_inc"></div>
+                      <div class="it_amount_dec"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="item_sidebar_action">
+              <div class="item_sidebar_order-btn">
+                <button class="uni-btn" type="submit">добавить в корзину</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    <div class="item_pg_tabs">
+      <div class="item_pg_tabs_inner">
+        <ul class="item_pg_tabs_list">
+          <li class="item_pg_tabs_item active"><a class="item_pg_tabs_link" href="#"><span class="tabs_text">Начинки</span><span class="tabs_toggle"></span></a></li>
+          <li class="item_pg_tabs_item item_pg_tabs_item_feedback"><a class="item_pg_tabs_link" href="#"><span class="tabs_text">Ярусы и вес</span><span class="tabs_toggle"></span></a></li>
+          <li class="item_pg_tabs_item item_pg_tabs_item_feedback"><a class="item_pg_tabs_link" href="#"><span class="tabs_text">Доставка и оплата</span><span class="tabs_toggle"></span></a></li>
+          <li class="item_pg_tabs_item item_pg_tabs_item_feedback"><a class="item_pg_tabs_link" href="#"><span class="tabs_text">Памятка употребления</span><span class="tabs_toggle"></span></a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="item_pg_tabs_content">
+      <div class="tabs_content_inner">
+        <div class="item_pg_tabs_content_item active">
+          <p><strong>С начинками можете ознакомиться ниже:</strong></p>
+          <style>
+            .app {
+            	display: grid;
+            	grid-column-gap: 15px;
+            	grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            
+            }
+            .tort{
+            	width: 100%;
+            	padding-top: 30px;
+            	
+            }
+          </style>
+          <div class="app">
+            <div class="item"><img class="tort" src="https://xn--90aijvkcjc.xn--p1ai/wa-data/public/photos/48/01/148/148.970.JPG"><strong>Раффаэлло <em><span style="color: rgb(242, 195, 20);">premium</span></em>.</strong> Ванильный бисквит со сливочно-карамельным кремом и прослойками из миндаля и кокосовой стружки</div>
+            <div class="item"><img class="tort" src="https://xn--90aijvkcjc.xn--p1ai/wa-data/public/photos/49/01/149/149.970.JPG"><strong>Орео <em><span style="color: rgb(242, 195, 20);">premium</span></em>.</strong> Шоколадный бисквит с начинкой из крема-чиз и с прослойкой чизкейк-орео</div>
+            <div class="item"><img class="tort" src="https://xn--90aijvkcjc.xn--p1ai/wa-data/public/photos/50/00/50/50.970.png"><strong>Мусс-малина <em><span style="color: rgb(242, 195, 20);">premium</span></em>.</strong> Нежный малиновый мусс, прослойка малинового конфитюра, крем-чиза и ванильных коржей</div>
+            <div class="item"><img class="tort" src="https://xn--90aijvkcjc.xn--p1ai/wa-data/public/photos/42/01/142/142.970.JPG"><strong>Прага <em><span style="color: rgb(242, 195, 20);">premium</span></em>.</strong> Классический шоколадный бисквит пропитанный сиропом и в сочетании с масляно-шоколадным кремом</div>
+            <div class="item"><img class="tort" src="https://xn--90aijvkcjc.xn--p1ai/wa-data/public/photos/46/01/146/146.970.png"><strong>Три шоколада <em><span style="color: rgb(242, 195, 20);">premium</span></em>.</strong> Три шоколада. Три слоя воздушного шоколадного мусса ( белый, молочный , темный ) в сочетании с мягким шоколадным бисквитом</div>
+            <div class="item"><img class="tort" src="https://xn--90aijvkcjc.xn--p1ai/wa-data/public/photos/47/01/147/147.970.jpg"><strong>Трюфель <em><span style="color: rgb(242, 195, 20);">premium</span></em>.</strong> Коржи на основе темного шоколада, пропитанных сиропом, с шоколадными сливками</div>
+            <div class="item"><img class="tort" src="https://xn--90aijvkcjc.xn--p1ai/wa-data/public/photos/50/01/150/150.970.jpg"><strong>Эстерхази <em><span style="color: rgb(242, 195, 20);">premium</span></em>.</strong> Миндально-шоколадная начинка из хрустящих ореховых коржей-безе и с масляно-заварным кремом</div>
+            <div class="item"><img class="tort" src="https://xn--90aijvkcjc.xn--p1ai/wa-data/public/photos/40/01/140/140.970.jpg"><strong>Молочная девочка <em><span style="color: rgb(242, 195, 20);">premium</span></em>.</strong> Тончайшие молочные коржи со сгущенкой с прослойками сливочного крема с кусочками малинового конфи</div>
+            <div class="item"><img class="tort" src="https://xn--90aijvkcjc.xn--p1ai/wa-data/public/photos/51/01/151/151.970.jpg"><strong>Мулатка <em><span style="color: rgb(242, 195, 20);">premium</span></em>.</strong> Начинка из тонких коржей на основе сгущенного молока и какао, шоколадно-сливочного крема</div>
+            <div class="item"><img class="tort" src="https://xn--90aijvkcjc.xn--p1ai/wa-data/public/photos/30/01/130/130.970.png"><strong>Медовик.</strong> Нежные медовые коржи в сочетании со сметанным кремом, перенесут Вас во вкус детства</div>
+            <div class="item"><img class="tort" src="https://xn--90aijvkcjc.xn--p1ai/wa-data/public/photos/73/00/73/73.970.png"><strong>Шоколадный медовик</strong> Шоколадные медовые коржи в сочетании сметанного крема</div>
+            <div class="item"><img class="tort" src="https://xn--90aijvkcjc.xn--p1ai/wa-data/public/site/img/bez-imeni-1-7.png"><strong>Тирамису.</strong> Французский бисквит, пропитанный натуральным кофе  в сочетании с классическим «Тирамису»</div>
+            <div class="item"><img class="tort" src="https://xn--90aijvkcjc.xn--p1ai/wa-data/public/photos/93/00/93/93.970.png"><strong>Вишня в шоколаде.</strong> Состоит из шоколадных бисквитных коржей в сочетании с ванильным крем-чиз и вишневым конфи</div>
+            <div class="item"><img class="tort" src="https://xn--90aijvkcjc.xn--p1ai/wa-data/public/photos/33/01/133/133.970.png"><strong>Красный бархат. </strong>Классические бисквиты красного бархата  в сочетании с нежнейшим крем-чиз(сырный) с ягодным конфитюром (дополнительно)</div>
+            <div class="item"><img class="tort" src="https://xn--90aijvkcjc.xn--p1ai/wa-data/public/site/img/bez-imeni-1-12.png"><strong>Наполеон.</strong> Воздушные слоенные коржи с прослойкой сливочно-заварного крема. Классический рецепт</div>
+            <div class="item"><img class="tort" src="https://xn--90aijvkcjc.xn--p1ai/wa-data/public/site/img/bez-imeni-1-13.png"><strong>Морковный.</strong> Слои морковно-апельсинового бисквита с добавлением арахиса и корицы прослоенные сырным крем-чизом</div>
+            <div class="item"><img class="tort" src="https://xn--90aijvkcjc.xn--p1ai/wa-data/public/photos/45/01/145/145.970.jpg"><strong>Йогуртовый.</strong> Воздушные ванильные  бисквиты, прослоенные йогуртом со взбитыми сливками и кусочками свежих ягод (на выбор : малина, клубника, голубика)</div>
+            <div class="item"><img class="tort" src="https://xn--90aijvkcjc.xn--p1ai/wa-data/public/photos/29/01/129/129.970.png"><strong>Сникерс.</strong> Шоколадный бисквит в сочетании со сливочно-карамельным кремом и кусочками жаренного арахиса</div>
+            <div class="item"><img class="tort" src="https://xn--90aijvkcjc.xn--p1ai/wa-data/public/site/img/bez-imeni-1-17.png"><strong>Птичье молоко.</strong> Ванильный бисквит, классическое суфле "птичье молоко" и прослойка ягодного конфитюра (дополнительно)</div>
+            <div class="item"><img class="tort" src="https://xn--90aijvkcjc.xn--p1ai/wa-data/public/site/img/bez-imeni-1-18.png"><strong>Фруктовый.</strong> Состоит из классических ванильных коржей, а между ними нежный крем-чиз с кусочками фруктов</div>
+            <div class="item"><img class="tort" src="https://xn--90aijvkcjc.xn--p1ai/wa-data/public/photos/34/01/134/134.970.png"><strong>Фисташка-малина.</strong> На основе фисташкового бисквита, сливочного сыра «Креметте» и малиновой прослойки</div>
+            <div class="item"><img class="tort" src="https://xn--90aijvkcjc.xn--p1ai/wa-data/public/photos/48/00/48/48.970.png"><strong>Шоколадная.</strong> Классический шоколадный бисквит , ванильный крем-чиз со взбитыми сливками и ничего лишнего!</div>
+            <div class="item"><img class="tort" src="https://xn--90aijvkcjc.xn--p1ai/wa-data/public/photos/49/00/49/49.970.png"><strong>Творожно-малиновая.</strong> Пропитанные ванильные бисквиты , творожно-ванильный крем с кусочками малины</div>
+            <div class="item"><img class="tort" src="https://xn--90aijvkcjc.xn--p1ai/wa-data/public/photos/32/01/132/132.970.png"><strong>Японский чизкейк.</strong> Прослойки воздушного японского чизкейка со сливочным крем-чиз и ванильным бисквитом (ягоды/прослойка по желанию)</div>
+            <div class="item"><img class="tort" src="https://xn--90aijvkcjc.xn--p1ai/wa-data/public/photos/92/00/92/92.970.png"><strong>Радужный.</strong> Состоит из классических цветных бисквитных коржей, а между ними нежный крем-чиз</div>
+            <div class="item"><img class="tort" src="https://xn--90aijvkcjc.xn--p1ai/wa-data/public/photos/41/01/141/141.970.jpg"><strong>Манго-шоколад.</strong> Шоколадные бисквитные коржи с натуральным кремом-пюре "манго"</div>
+            <div class="item"><img class="tort" src="https://xn--90aijvkcjc.xn--p1ai/wa-data/public/photos/75/00/75/75.970.png"><strong>Фисташка-мята.</strong> На основе фисташкового бисквита и нежного мятного крем-чиза</div>
+            <div class="item"><img class="tort" src="https://xn--90aijvkcjc.xn--p1ai/wa-data/public/photos/44/01/144/144.970.JPG"><strong>Ванильная.</strong> Классический ванильный бисквит с крем-чиз и конфитюром (дополнительно)</div>
+          </div>
+        </div>
+        <div class="item_pg_tabs_content_item">
+          <style>
+            .app {
+            display: grid;
+            grid-column-gap: 15px;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            }
+            .tort{
+            width: 100%;
+            padding-top: 30px;
+            }
+          </style>
+          <p></p>
+          <div class="app">
+            <div class="item"><img class="tort" src="https://xn--90aijvkcjc.xn--p1ai/wa-data/public/shop/img/bez-imeni-1.png"><strong>1 ярус</strong><br><strong>Вес:</strong> 1-4 кг<br><strong>Кол-во человек:</strong> до 20<br></div>
+            <div class="item"><img class="tort" src="https://xn--90aijvkcjc.xn--p1ai/wa-data/public/shop/img/bez-imeni-2.png"><strong>2 яруса</strong><br><strong>Вес:</strong> 5-8 кг<br><strong>Кол-во человек:</strong> до 35<br></div>
+            <div class="item"><img class="tort" src="https://xn--90aijvkcjc.xn--p1ai/wa-data/public/shop/img/bez-imeni-3.png"><strong>3 яруса</strong><br><strong>Вес:</strong> 9-18 кг<br><strong>Кол-во человек:</strong> до 70<br></div>
+            <div class="item"><img class="tort" src="https://xn--90aijvkcjc.xn--p1ai/wa-data/public/shop/img/bez-imeni-4.png"><strong>4 яруса</strong><br><strong>Вес:</strong> 19-35 кг<br><strong>Кол-во человек:</strong> до 140<br></div>
+            <div class="item"><img class="tort" src="https://xn--90aijvkcjc.xn--p1ai/wa-data/public/photos/88/00/88/88.970.png"><strong>Торт Ø 16 см - 1 кг</strong><br><strong>Торт Ø 18 см - 1,5 кг</strong><br><strong>Торт Ø 20 см - 2 кг</strong><br><strong>Торт Ø 24 см - 2,5-3 кг</strong><br></div>
+          </div>
+        </div>
+        <div class="item_pg_tabs_content_item">
+          <p style="margin-bottom:10px;"><strong></strong><strong><span style="font-size: 20px; color: rgb(128, 100, 162);margin-bottom:10px;">Самовывоз:</span></strong></p>
+          <p><strong>Москва</strong>, Комсомольская пл., 3,<br><strong>Московская обл</strong>, ул. Земляной Вал, 29,<br><strong>Москва</strong>, Комсомольская пл., 2,<br><strong>Москва</strong>, Павелецкая пл., 1,<br><strong>Москва</strong>, пл. Тверская Застава, 7,<br><strong>Москва</strong>, пл. Киевского Вокзала, 1,<br><strong>Люберцы</strong>, Кирова 9к5, <br><strong>Троицк</strong>, Сиреневый бульвар д. 8</p>
+          <p style="margin-bottom:10px;margin-top:10px;"><strong><span style="font-size: 20px; color: rgb(128, 100, 162);margin-bottom:10px;">Доставка:</span></strong></p>
+          <p style="margin-bottom:10px;">Доставляем по Москве и Московской области с 9:00 до 22:00, сумма заказа для доставки от 300 руб. Временной промежуток доставки +- 3 часа. Если Вам необходима доставка к определенному времени - сообщите об этом менеджеру при оформлении заказа. Доставка трехъярусных тортов и выше +1000 рублей к заказу, в силу сложности доставки подобных тортов. Время ожидания курьера на Вашей точке 15 минут, далее тарификация 100 руб за каждые 15 минут, убедительная просьба не опаздывать.</p>
+          <p><strong style="margin-bottom:10px;">Доставка в пределах МКАД:</strong> 100 руб<br></p>
+          <p><strong>Доставка по Бутово, Коммунарка, Теплый стан, Реутов, Люберцы, Троицк (<a href="./delivery_and_pay.html" target="_blank">зеленая зона на карте</a>)</strong>: 450 руб</p>
+          <p><strong>За пределами МКАД: </strong>700 руб + 25 руб/км</p>
+          <p><strong>Вы всегда можете воспользоваться услугами наших партнеров - курьерской службой Чекбокс, Достависта, Яндекс GO:</strong>от 500 - до 1500 руб, в зависимости от рассположения. Ответственность за перевозку переносится на заказчика.</p>
+          <p style="margin-bottom:10px; margin-top:10px;"><strong><span style="color: rgb(128, 100, 162); font-size: 20px;margin-bottom:10px;">Оплата:</span></strong></p>
+          <p>Оплата осуществляется любым удобным для Вас способом: наличными, безналичными на сайте, оплата по счету.</p>
+        </div>
+        <div class="item_pg_tabs_content_item">
+          <p>1. Готовый торт храните только в холодильнике.</p>
+          <p>
+             2. Перед употреблением торта предварительно необходимо снять все несъедобные детали, если они присутствуют на торте.</p>
+          <p>3. Для фигурок используются несъедобные бамбуковые палочки, проволочки, зубочистки. Не давайте несъедобные детали детям. Будьте внимательны, чтобы это не омрачило Ваш праздник!</p>
+          <p>4. Для многоярусных тортов: верхние ярусы торта необходимо снять (каждый ярус крепится на своей подложке). Трубочки для крепления ярусов удалить (они не съедобны).</p>
+          <p>5. Наша продукция хранится до 72 часов. Не употребляйте оставшийся торт на четвертые и более сутки и, тем более, не давайте такой торт детям. За изменение нашей рецептуры под Ваши предпочтения компания CakeStudio никакой ответственности не несет. В данном случае, продукция может отклоняться от рекомендованных нами условий хранения и употребления. <strong>Внимание: внешний декор в первозданном виде держится 24 часа</strong>, далее в зависимости от условий хранения / массы декора / состава декора внешний вид может деформироваться!</p>
+          <p>6. Сахарная мастика для покрытия торта – съедобная красивая упаковка и кушать ее можно, но не обязательно. Она легко снимается с кусочка. Оцените по достоинству вкус начинки.</p>
+          <p>7. Для любителей ярких, порой кислотных цветов. Для получения яркого цвета требуется использовать много красителя, вы должны это учитывать и понимать, особенно при выборе детских тортов. Современный уровень развития пищевого производства обеспечивает кондитеров натуральными и абсолютно безвредными пищевыми красителями, но при этом они не перестают быть красителями.</p>
+          <p>8. Не забудьте предупредить кондитера о том, на что у ребенка есть аллергия (если есть). Если торт планируется на торжество, где будут друзья вашего ребенка, поинтересуйтесь у родителей детей, которые приглашены на праздник, нет ли у них аллергии или каких-либо других проблем с определенными продуктами. К сожалению, аллергия может быть на самый распространенный и обыденный продукт, который часто используется в приготовлении и оформлении тортов: шоколад, цитрусовые, фрукты или ягоды. Об этом нужно обязательно предупредить кондитера.</p>
+        </div>
+      </div>
+    </div>
+  <div class="footer">
+    <div class="footer_wrap">
+      <div class="footer_card">
+        <div class="footer_card_title">
+          <h5>Компания</h5>
+        </div>
+        <div class="footer_card_link"><a th:href="@{/news}">Новости</a><a th:href="@{/}">Отзывы</a><a th:href="@{/contacts}">Контакты</a><a th:href="@{/credentials}">Реквизиты</a></div>
+      </div>
+      <div class="footer_card">
+        <div class="footer_card_title">
+          <h5>Информация</h5>
+        </div>
+        <div class="footer_card_link"><a th:href="@{/produce}">Производтства</a><a th:href="@{/delivery_and_pay}">Оплата</a><a th:href="@{/licenses_detail}">Политика</a></div>
+      </div>
+      <div class="footer_card">
+        <div class="footer_card_title">
+          <h5>Помощь</h5>
+        </div>
+        <div class="footer_card_link"><a th:href="@{/payment_conditions}">Условия оплаты</a><a th:href="@{/delivery_and_pay}">Условия доставки</a></div>
+      </div>
+    </div>
+    <div class="footer_social_wrap">
+      <hr><a class="img_one" href="https://vk.com"></a><a class="img_two" href="https://youtube.com"></a><a class="img_three" href="https://tiktok.com"></a>
+      <hr>
+    </div>
+    <div class="footer_copyright">
+      <p>2023 © Powered by Khasan Abdurakhmanov</p>
+      <div class="payment">
+        <div class="payment_one"></div>
+        <div class="payment_two"></div>
+        <div class="payment_three"></div>
+      </div>
+    </div>
+  </div>
+    <script>
+      const items = document.querySelectorAll('.slider>img');
+      const itemCount = items.length;
+      const nextItem = document.querySelector('.next');
+      const previousItem = document.querySelector('.previous');
+      let count = 0;
+      
+      function showNextItem() {
+      	items[count].classList.remove('active');
+      
+      	if(count < itemCount - 1) {
+      		count++;
+      	} else {
+      		count = 0;
+      	}
+      
+      	items[count].classList.add('active');
+      	console.log(count);
+      }
+      
+      function showPreviousItem() {
+      	items[count].classList.remove('active');
+      
+      	if(count > 0) {
+      		count--;
+      	} else {
+      		count = itemCount - 1;
+      	}
+      
+      	items[count].classList.add('active');
+      	console.log(count);
+      }
+      
+      function keyPress(e) {
+      	e = e || window.event;
+      
+      	if (e.keyCode == '37') {
+      		showPreviousItem();
+      	} else if (e.keyCode == '39') {
+      		showNextItem();
+      	}
+      }
+      
+      nextItem.addEventListener('click', showNextItem);
+      previousItem.addEventListener('click', showPreviousItem);
+      document.addEventListener('keydown', keyPress);
+      
+      document.addEventListener('DOMContentLoaded', function() {
+      	var parentElement = document.querySelector('.it_amount_inc_dec');
+      
+      	parentElement.addEventListener('click', function(event) {
+      		if (event.target.classList.contains('it_amount_inc')) {
+      			var currentVal = parseInt(document.querySelector('.it_amount_num>input').value);
+      			if (!isNaN(currentVal) && currentVal < 5) {
+      				document.querySelector('.it_amount_num>input').value = currentVal + 1;
+      			} else {
+      				//- alert('Maximum value is 5');
+      			}
+      		} else if (event.target.classList.contains('it_amount_dec')) {
+      			var currentVal = parseInt(document.querySelector('.it_amount_num>input').value);
+      			if (!isNaN(currentVal) && currentVal > 1) {
+      				document.querySelector('.it_amount_num>input').value = currentVal - 1;
+      			}
+      		}
+      	});
+      });
+      
+      const links = document.querySelectorAll('.item_pg_tabs_link');
+      const items_tab = document.querySelectorAll('.item_pg_tabs_item');
+      const content_item =document.querySelectorAll('.item_pg_tabs_content_item')
+      
+      items_tab.forEach((item, index) => {
+        item.addEventListener('click', () => {
+      	const isActive = item.classList.contains('active');
+      	if (isActive) {
+      	  
+      	} else {
+      		document.querySelector('.item_pg_tabs_list>.active').classList.remove('active');
+      		document.querySelector('.tabs_content_inner>.active').classList.remove('active');
+      		content_item[index].classList.add('active');
+      		item.classList.add('active');
+      	}
+      	console.log(parent);
+      	// do something with the parent element
+        });
+      });
+    </script>
+  </body>
+</html>

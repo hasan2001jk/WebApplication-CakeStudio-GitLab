@@ -1,0 +1,203 @@
+/* Footer section starts HERE!!! */
+.footer{
+    width: 900px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.footer_wrap{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items:flex-start;
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+
+.footer_card{
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    /* border:1px solid black; */
+    
+}
+
+.footer_card_title{
+    text-align: left;
+    font-size: 24px;
+    text-transform: uppercase;
+    /* border:1px solid yellow; */
+    margin: 0;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 600;
+    margin-bottom: 18px;
+}
+
+.footer_card_link{
+    font-family: 'Roboto', sans-serif;
+    font-weight: 300;
+    display:flex;
+    flex-direction: column;
+    justify-content: space-between;
+    /* border:1px solid red; */
+    margin:0;
+    line-height: 32.6px;
+}
+
+.footer_card_link a{
+    text-align: left;
+    font-size: 18px;
+    text-decoration: none;
+    /* color:black; */
+    margin:0;
+    color:#A5A2A2;
+}
+
+.footer_card_link a:hover{
+    text-decoration: none;
+    cursor:default;
+}
+
+.footer_card_link a:visited{
+    color:#A5A2A2;
+    text-decoration: none;
+}
+
+.footer_social_wrap{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items:center;
+    margin-top: 10px;
+}
+
+.footer_social_wrap a{
+    cursor:default;
+}
+
+.footer_social_wrap .img_one{
+    width: 40px;
+    height: 40px;
+    background-image: url('../../Icons/vk.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+    transition: all 0.5s ease-in-out;
+}
+
+.footer_social_wrap .img_one:hover{
+    background-image: url("../../Icons/vk_color.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.footer_social_wrap .img_two{
+    width: 40px;
+    height: 40px;
+    background-image: url('../../Icons/youtube.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+    transition: all 0.5s ease-in-out;
+}
+
+.footer_social_wrap .img_two:hover{
+    background-image: url("../../Icons/youtube_color.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+
+.footer_social_wrap .img_three{
+    width: 40px;
+    height: 40px;
+    background-image: url('../../Icons/tiktok.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+    transition: all 0.5s ease-in-out;
+}
+
+.footer_social_wrap .img_three:hover{
+    background-image: url("../../Icons/tiktok_color.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+hr{
+    width: 350px;
+}
+
+.footer_copyright{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-top: 50px;
+}
+
+.footer_copyright p{
+    width: 100%;
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-size: 22px;
+    /* border:1px solid yellow; */
+}
+
+.footer_copyright .payment{
+    width: 100%;
+    /* border:1px solid red; */
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+}
+
+
+.payment_one{
+    width: 25px;
+    height: 25px;
+    background-image: url("../../Icons/payment.svg");
+    background-position: 0 -245px;
+    /* background-size: cover; */
+    /* border:1px solid black; */
+    margin-left: 335px;
+}
+
+.payment_one:hover{
+    background-position: 0 -195px;
+}
+
+
+.payment_two{
+    width: 25px;
+    height: 25px;
+    background-image: url("../../Icons/payment.svg");
+    background-position: -279px -245px;
+    /* background-size: cover; */
+    /* border:1px solid black; */
+}
+
+.payment_two:hover{
+    background-position: -327px -195px;
+}
+
+
+.payment_three{
+    width: 30px;
+    height: 25px;
+    background-image: url("../../Icons/payment.svg");
+    background-position: -42px -247px;
+    /* background-size: cover; */
+    /* border:1px solid black; */
+    margin-right: 15px;
+}
+
+.payment_three:hover{
+    background-position: -42px -197px;
+}
+/* Footer ends HERE!!! */
+/* ------------------ */

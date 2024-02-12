@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" th:href="@{/style/header.css}">
+    <link rel="stylesheet" th:href="@{/style/footer.css}">
+    <link rel="stylesheet" th:href="@{/style/reviews.css}">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css">
+    <link rel="stylesheet" th:href="@{/style/simple-adaptive-slider.css}">
+    <link rel="icon" th:href="@{/Icons/fav/0.gif}">
+    <link rel="shortcut icon" th:href="@{/Icons/fav/0.gif}">
+    <link rel="stylesheet" th:href="@{/style/index.css}">
+    <script src="https://code.jquery.com/jquery-3.6.4.slim.js" integrity="sha256-dWvV84T6BhzO4vG6gWhsWVKVoa4lVmLnpBOZh/CAHU4=" crossorigin="anonymous"></script>
+    <link rel="stylesheet" type="text/css" th:href="@{/style/slick.css}">
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery.slick/1.6.0/slick.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,600;1,700&amp;family=Dancing+Script:wght@400;500;600;700&amp;family=Inspiration&amp;family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&amp;display=swap" rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <title>CakeStudio</title>
+    <script th:src="@{/JS/circletype.min.js}" preload></script>
+    <script defer th:src="@{/JS/header.js}"></script>
+    <script src="https://cdn.lordicon.com/ritcuqlt.js"></script>
+    <script th:src="@{/JS/simple-adaptive-slider.js}"></script>
+    <script th:src="@{/JS/update_page.js}"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/numeral.js/2.0.6/numeral.min.js"></script>
+  </head>
+  <body>
+    <header>
+      <div class="header_wrapper">
+        <div class="header_logo"><img th:src="@{/Logo/Photographer-Arranging.svg}" alt="Logo"><a href="/" id="logo_text">Cake of your dreams</a></div>
+        <div class="header_menu">
+          <div class="header_menu_category">
+            <ul>
+              <li><a th:href="@{/news}">новости</a></li>
+              <li><a th:href="@{/production}">продукция</a></li>
+              <li><a th:href="@{/o_nas}">о нас</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="auth_wrapper">
+          <div class="dropdown">
+            <lord-icon class="dropdown-toggle" src="https://cdn.lordicon.com/ajkxzzfb.json" trigger="morph" colors="primary:#ffc738,secondary:#4bb3fd" state="morph-group" style="width:40px;height:40px"></lord-icon>
+            <div class="dropdown-content">
+              <div class="dropdown-content-wrapper">
+                <div class="dropdown-content-item" th:if="${is_auth==false || is_auth==null}"><a class="sign-in" th:href="@{/login}">Войти</a><a class="join-in" th:href="@{/registration}">Регистрация</a></div>
+                <div class="dropdown-content-item" th:if="${is_auth==true}"><a class="sign-in" th:text="${auth_name}"></a></div>
+                <div class="dropdown-content-item"><img class="close-icon" th:src="@{/Icons/close.png}" alt="close"></div>
+              </div>
+              <div class="dropdown-content-wrapper_info">
+                <div class="dropdown-content-wrapper_info_all"><img class="hover_img" th:src="@{/Icons/my_account_WB.png}" alt="My Account"><a class="hover_text" th:href="@{/my_account}" target="_blank">мой аккаунт</a></div>
+              </div>
+              <div class="dropdown-content-wrapper_info">
+                <div class="dropdown-content-wrapper_info_all"><img class="hover_img" th:src="@{/Icons/wedding_cake.png}" alt="My Orders"><a class="hover_text" th:href="@{/my_orders}" target="_blank">мои заказы</a></div>
+              </div>
+              <div class="dropdown-content-wrapper_info">
+                <div class="dropdown-content-wrapper_info_all"><img class="hover_img" th:src="@{/Icons/credit-card.png}" alt="Payment"><a class="hover_text" th:href="@{/payment_method}" target="_blank">Оплата</a></div>
+              </div>
+              <div class="dropdown-content-wrapper_info">
+                <div class="dropdown-content-wrapper_info_all"><img class="hover_img" th:src="@{/Icons/sms.png}" alt="Contact Preferences"><a class="hover_text" th:href="@{/contact_preferences}" target="_blank">Контакты</a></div>
+              </div>
+            </div>
+          </div>
+          <div class="drop">
+            <lord-icon class="drop-toggle" src="https://cdn.lordicon.com/lpddubrl.json" trigger="hover" style="width:40px;height:40px" th:onclick="|window.location.href='/to-basket'|"></lord-icon>
+            <span class="circle_basket_counter" th:if="${not #lists.isEmpty(cart_item)}" th:text="${cart_item.size()}"></span>
+            <div class="drop-content" th:if="${not #lists.isEmpty(cart_item)}">
+              <div class="drop_wrap_st">
+                <div class="drop_wrap_title">
+                  <p>Моя корзина,</p><span th:text="${cart_item.size()}+' шт'"></span>
+                </div>
+                <div class="drop_wrap_icon"><img class="close-ico" th:src="@{/Icons/close.png}" alt="close"></div>
+              </div>
+              <div class="drop_wrap_nd">
+                <th:block th:each="item: ${cart_item}">
+                  <div style="display:flex; flex-direction:row;margin:0px 0px 10px 0px;padding-right:10px;">
+                    <div class="purchase_img_wrap"><img th:src="@{${item.getProduct().getImage()}}" th:alt="${item.getProduct().getName()}"></div>
+                    <div class="purchase_text_wrap">
+                      <p th:text="'₽ '+${item.getProduct().getPrice()}"></p>
+                      <p th:text="${item.getProduct().getName()}"></p>
+                      <p class="item_description"><a th:href="@{'/item/'+${item.getProduct().getId()}}" th:text="${item.getProduct().getDescription()}" style="all:unset;cursor:default;"></a></p>
+                      <p>Количество:<span th:text="${item.getQuantity()}"></span></p>
+                      <div class="purchase_icon_wrap">
+                        <a th:href="@{'/basket/delete?productId='+${item.getProduct().getId()}}"><lord-icon class="trash_icon" src="https://cdn.lordicon.com/jmkrnisz.json" trigger="hover" colors="primary:#c71f16" state="hover-empty" style="width:20px;height:20px">
+                          </lord-icon></a>
+                      </div>
+                    </div>
+                  </div>
+                </th:block>
+              </div>
+              <div class="drop_wrap_rd">
+                <div class="sub_total_wrap"><span class="sub_total_wrap_title">Итого</span><span class="sub_total_wrap_price" th:text="'₽ '+ ${total_price}"></span></div>
+              </div>
+              <div class="drop_wrap_th">
+                <p class="button_view_bag"><a th:href="@{/to-basket}">В корзину</a></p>
+                <p class="button_checkout_bag"><a th:href="@{/order/proverka}">Оформить</a></p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+    <div class="famous_cakes"> 
+      <div class="cakes_wrap">
+        <div class="cake_card">
+          <div class="cake_card_st" onclick="showNextDiv(this)">
+            <div class="cake_card_img"><img th:src="@{/Images/Пьяная Вишня.jpg}" alt="Торт Пьяная Вишня"></div>
+            <div class="cake_card_title">
+              <p>Торт «Пьяная Вишня»</p>
+            </div>
+          </div>
+          <div class="cake_card_nd" onclick="showNextDiv(this)"><img th:src="@{/Images/Pastry.jpg}" alt="Процесс приготовления муки">
+            <div class="cake_card__title">
+              <p>Ингредиенты для теста</p>
+            </div>
+            <div class="cake_card__text">
+              <p>Мука<span>250 г</span></p>
+              <p>Какао-поршок<span>4 ст.ложки</span></p>
+              <p>Разрыхлитель<span>1.5 ч.ложки</span></p>
+              <p>Яйца<span>6 штук</span></p>
+              <p>Сахар<span>350 г</span></p>
+            </div>
+            <div class="cake_card_title">
+              <p>Торт «Пьяная Вишня»</p>
+            </div>
+          </div>
+          <div class="cake_card_rd" onclick="showNextDiv(this)"><img th:src="@{/Images/CakeCream.jpg}" alt="Процесс приготовления крема и начинки">
+            <div class="cake_card__title">
+              <p>Ингредиенты для крема</p>и начинки
+            </div>
+            <div class="cake_card__text">
+              <p>Вишня без косточек<span>2 стакана</span></p>
+              <p>Красное полусладкое вино<span>1 стакан</span></p>
+              <p>Сливочное масло<span>300 г</span></p>
+              <p>Сгущённое молоко<span>400 г</span></p>
+            </div>
+            <div class="cake_card_title">
+              <p>Торт «Пьяная Вишня»</p>
+            </div>
+          </div>
+          <div class="cake_card_th" onclick="showNextDiv(this)"><img th:src="@{/Images/Time.jpg}" alt="Время приготовления">
+            <div class="cake_card__title">
+              <p>Время приготовления</p>
+            </div>
+            <div class="cake_card__text">
+              <p>Общее<span>4 часа</span></p>
+              <p>Активное<span>45 мин</span></p>
+            </div>
+            <div class="cake_card_title">
+              <p>Торт «Пьяная Вишня»</p>
+            </div>
+          </div>
+        </div>
+        <div class="cake_card">
+          <div class="cake_card_st" onclick="showNextDiv(this)">
+            <div class="cake_card_img"><img th:src="@{/Images/Cakes/Cake.jpg}" alt="Торт Eat Me"></div>
+            <div class="cake_card_title">
+              <p>Торт «Eat Me»</p>
+            </div>
+          </div>
+          <div class="cake_card_nd" onclick="showNextDiv(this)"><img th:src="@{/Images/Pastry.jpg}" alt="Процесс приготовления муки">
+            <div class="cake_card__title">
+              <p>Ингредиенты для теста</p>
+            </div>
+            <div class="cake_card__text">
+              <p>Мука<span>60 г</span></p>
+              <p>Соль<span>1 щепотка</span></p>
+              <p>Ванильный экстракт<span>0.5 ч.ложки</span></p>
+              <p>Яйца<span>2 штуки</span></p>
+              <p>Сахар<span>60 г</span></p>
+            </div>
+            <div class="cake_card_title">
+              <p>Торт «Eat Me»</p>
+            </div>
+          </div>
+          <div class="cake_card_rd" onclick="showNextDiv(this)"><img th:src="@{/Images/CakeCream.jpg}" alt="Процесс приготовления крема и начинки">
+            <div class="cake_card__title">
+              <p>Ингредиенты для крема</p>и начинки
+            </div>
+            <div class="cake_card__text">
+              <p>Сахарная пудра<span>70 г</span></p>
+              <p>Крем-сыр<span>300 г</span></p>
+              <p>Сливочное масло<span>100 г</span></p>
+              <p>Молоко<span>50 мл</span></p>
+            </div>
+            <div class="cake_card_title">
+              <p>Торт «Eat Me»</p>
+            </div>
+          </div>
+          <div class="cake_card_th" onclick="showNextDiv(this)"><img th:src="@{/Images/Time.jpg}" alt="Время приготовления">
+            <div class="cake_card__title">
+              <p>Время приготовления</p>
+            </div>
+            <div class="cake_card__text">
+              <p>Общее<span>3 часа</span></p>
+              <p>Активное<span>1 час</span></p>
+            </div>
+            <div class="cake_card_title">
+              <p>Торт «Eat Me»</p>
+            </div>
+          </div>
+        </div>
+        <div class="cake_card">
+          <div class="cake_card_st" onclick="showNextDiv(this)">
+            <div class="cake_card_img"><img th:src="@{/Images/Cakes/cake_magic_time.jpg}" alt="Торт Magic Time"></div>
+            <div class="cake_card_title">
+              <p>Торт «Magic Time»</p>
+            </div>
+          </div>
+          <div class="cake_card_nd" onclick="showNextDiv(this)"><img th:src="@{/Images/Pastry.jpg}" alt="Процесс приготовления муки">
+            <div class="cake_card__title">
+              <p>Ингредиенты для теста</p>
+            </div>
+            <div class="cake_card__text">
+              <p>Мука<span>200 г</span></p>
+              <p>Какао-поршок<span>2 ст. ложки</span></p>
+              <p>Разрыхлитель<span>1 ч. ложка</span></p>
+              <p>Яйца<span>6 штук</span></p>
+              <p>Сахар<span>120 г</span></p>
+            </div>
+            <div class="cake_card_title">
+              <p>Торт «Magic Time»</p>
+            </div>
+          </div>
+          <div class="cake_card_rd" onclick="showNextDiv(this)"><img th:src="@{/Images/CakeCream.jpg}" alt="Процесс приготовления крема и начинки">
+            <div class="cake_card__title">
+              <p>Ингредиенты для крема</p>и начинки
+            </div>
+            <div class="cake_card__text">
+              <p>Грецкие орехи<span>50 г</span></p>
+              <p>Консервированные ананасы<span>500 г</span></p>
+              <p>Сахарная пудра<span>150 г + 1 ст. ложка</span></p>
+              <p>Жирная сметана<span>800 г</span></p>
+            </div>
+            <div class="cake_card_title">
+              <p>Торт «Magic Time»</p>
+            </div>
+          </div>
+          <div class="cake_card_th" onclick="showNextDiv(this)"><img th:src="@{/Images/Time.jpg}" alt="Время приготовления">
+            <div class="cake_card__title">
+              <p>Время приготовления</p>
+            </div>
+            <div class="cake_card__text">
+              <p>Общее<span>4 часа</span></p>
+              <p>Активное<span>1 час</span></p>
+            </div>
+            <div class="cake_card_title">
+              <p>Торт «Magic Time»</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="famous_cakes_title">
+        <p>Топ - 3 популярных тортов</p>
+      </div>
+    </div>
+    <div class="video_lesson">
+      <div class="video_lesson_wrap">
+        <div class="video_lesson_title">
+          <p>Процесс</p>
+        </div>
+        <div class="video_lesson_content">
+          <div class="video_lesson_video">
+            <video autoplay="" loop muted>
+              <source th:src="@{/Videos/Drunk_Cherry.mp4}" type="video/mp4">
+              <source th:src="@{/Videos/Cake_Drunk_Cherry.webm}" type="video/webm">Ваш браузер не поддерживает данный формат видеозаписи.
+            </video>
+          </div>
+          <div class="video_lesson_theory">
+            <div class="itcss">
+              <div class="itcss__wrapper">
+                <div class="itcss__items">
+                  <div class="itcss__item">
+                    <p class="itcss__item__title">Приготовление</p>
+                    <ul>
+                      <li>Разогрейте духовку до 180 °С. Круглую форму диаметром 23 см застелите пергаментной бумагой.</li>
+                      <li>Муку просейте с какао-порошком и смешайте с разрыхлителем.</li>
+                      <li>Отделите желтки от белков. Последние взбейте миксером до мягких пиков.</li>
+                      <li>Продолжая взбивать, постепенно всыпьте к белкам сахар и поочерёдно добавьте желтки.</li>
+                    </ul>
+                  </div>
+                  <div class="itcss__item">
+                    <p class="itcss__item__title">Приготовление</p>
+                    <ul>
+                      <li value="5">Частями всыпьте в миску сухие   ингредиенты к яичной массе, быстро перемешивайте всё лопаткой до однородности.</li>
+                      <li>Вылейте тесто в подготовленную форму. Выпекайте бисквит 35–40 минут до готовности.</li>
+                      <li>Вишню залейте вином и уберите в холодильник на 40–60 минут. Бисквит достаньте из формы и полностью остудите.</li>
+                    </ul>
+                  </div>
+                  <div class="itcss__item">
+                    <p class="itcss__item__title">Приготовление</p>
+                    <ul>
+                      <li value="8">Срежьте с верха бисквита корж толщиной 1 см. Из большей части бисквита достаньте мякиш, оставляя дно и борта толщиной 1 см. Удалённый бисквит измельчите в крошку.</li>
+                      <li>Размягчённое сливочное масло взбейте миксером в светлую пышную массу. Добавьте сгущённое молоко и взбивайте ещё 2–3 минуты до однородности. Крем уберите в холодильник на 10–15 минут.</li>
+                    </ul>
+                  </div>
+                  <div class="itcss__item">
+                    <p class="itcss__item__title">Приготовление</p>
+                    <ul>
+                      <li value="10">Слейте и сохраните жидкость от вишни. Пропитайте ею дно и борта бисквита.</li>
+                      <li>Отложите треть крема. Оставшийся тщательно смешайте с вишней и крошками. Наполните полностью получившейся массой бисквит.</li>
+                      <li>Накройте торт срезанной верхушкой бисквита, пропитайте её соком от вишни.</li>
+                      <li>Смажьте верх и бока торта отложенным кремом, украсьте его</li>
+                    </ul>
+                    <!-- Стрелки для перехода к предыдущему и следующему слайду--><a class="itcss__control itcss__control_prev" href="#" role="button" data-slide="prev"></a><a class="itcss__control itcss__control_next" href="#" role="button" data-slide="next"></a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="popular_category">
+      <div class="popular_category_wrap">
+        <div class="popular_category_title">
+          <p>Популярные категории тортов</p>
+        </div>
+        <div class="popular_category_card_wrap">
+          <div class="popular_category_card"><a href="/production/1" target="_blank"><img src="./Images/8-March.png" alt="8-March" data-text="8-Марта"></a></div>
+          <div class="popular_category_card"><a href="/production/2" target="_blank"><img src="./Images/kids.png" alt="kids" data-text="Детские"></a></div>
+          <div class="popular_category_card"><a href="/production/3" target="_blank"><img src="./Images/holiday.png" alt="holiday" data-text="Праздничные"></a></div>
+          <div class="popular_category_card"><a href="/production/4" target="_blank"><img src="./Images/creative.png" alt="creative" data-text="Креативные"></a></div>
+        </div>
+        <div class="popular_category_card_wrap">
+          <div class="popular_category_card"><a href="/production/5" target="_blank"><img src="./Images/bento_cake.png" alt="Bento Cake" data-text="Бенто торты"></a></div>
+          <div class="popular_category_card"><a href="/production/6" target="_blank"><img src="./Images/wedding.png" alt="wedding" data-text="Свадебные"></a></div>
+          <div class="popular_category_card"><a href="/production/7" target="_blank"><img src="./Images/vitrina_cake.png" alt="Vitrina Cake" data-text="Витринные торты"></a></div>
+          <div class="popular_category_card"><a href="/production/9" target="_blank"><img src="./Images/Cheescake.png" alt="Cheescake" data-text="Чизкейки"></a></div>
+        </div>
+      </div>
+    </div>
+    <div class="what_we_offer">
+      <div class="what_we_offer_wrap">
+        <div class="offer_card">
+          <div class="offer_card_img"><img th:src="@{/Icons/natural.png}" alt="Natural Leaf"></div>
+          <div class="offer_card_title">
+            <h3>всё натуральное</h3>
+          </div>
+          <div class="offer_card_descr">
+            <p>Мы не дружим со словами «маргарин», «искусственный» и другими страшными словами</p>
+          </div>
+        </div>
+        <div class="offer_card">
+          <div class="offer_card_img"><img th:src="@{/Icons/dollar.png}" alt="Money"></div>
+          <div class="offer_card_title">
+            <h3>Корпоративным клиентам</h3>
+          </div>
+          <div class="offer_card_descr">
+            <p>Возможна оплата по счету, пришлем все необходимые документы и подберем торт под ваши параметры</p>
+          </div>
+        </div>
+        <div class="offer_card">
+          <div class="offer_card_img"><img th:src="@{/Icons/recipe.png}" alt="Recipe"></div>
+          <div class="offer_card_title">
+            <h3>Собственная рецептура</h3>
+          </div>
+          <div class="offer_card_descr">
+            <p>9 из 10 клиентов возвращаются к нам снова. Тщательный отбор только лучших кондитеров Москвы</p>
+          </div>
+        </div>
+        <div class="offer_card">
+          <div class="offer_card_img"><img th:src="@{/Icons/takeaway.png}" alt="Takeaway"></div>
+          <div class="offer_card_title">
+            <h3>Фотоотчёт</h3>
+          </div>
+          <div class="offer_card_descr">
+            <p>Отправим Вам фото готового заказа перед доставкой, чтобы Вы не беспокоились за качество заказа</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="production">
+      <div class="production_title">
+        <h3>Хиты продаж</h3>
+      </div>
+      <div class="slick-slider">
+        <div class="slick-slide" th:each="prod : ${products}">
+          <div class="production_card_img" th:onclick="|window.location.href='/item/${prod.id}'|"><img th:src="@{${prod.image}}" th:alt="${prod.name}"></div>
+          <div class="production_card_title">
+            <p th:text="${prod.name}"></p>
+          </div>
+          <div class="production_card_price">
+            <p class="pr" th:text="${prod.price}"></p>
+          </div>
+          <div class="production_card_wrap_img">
+            <div class="production_card_basket"><a th:href="@{'/basket/add?productId='+${prod.id}}">
+                <lord-icon src="https://cdn.lordicon.com/cllunfud.json" trigger="hover" style="width:32px;height:32px"></lord-icon></a></div>
+            <div class="production_card_heart"><a th:href="@{'/saved_items/add?productId='+${prod.id}}">
+                <lord-icon src="https://cdn.lordicon.com/iwaotjbp.json" trigger="hover" style="width:32px;height:32px"></lord-icon></a></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="koguvcavis-varazdel" id="reviews">
+      <div class="sestim-donials">
+        <div class="zamas">
+          <h1>Отзывы</h1>
+        </div>
+        <div class="sectionesag"></div>
+        <div class="sagestim-lonials">
+          <div class="vemotau-vokusipol">
+            <div class="testimonial">
+              <div class="ramka"><img th:src="@{/Images/Lisa.png}" alt="Liza"></div>
+              <div class="gecedanam">Lisa</div>
+              <div class="apogered-gselected"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+              <p>Я купила торт в вашем магазине и была очень довольна качеством.</p>
+              <p>Торт был свежим, вкусным, начинка красный бархат, просто нежнейшие прослойки крема чиз, бисквиты пропитанные, кайф.</p>
+            </div>
+          </div>
+          <div class="vemotau-vokusipol">
+            <div class="testimonial">
+              <div class="ramka"><img th:src="@{/Images/Anton.png}" alt="Anton"></div>
+              <div class="gecedanam">Timur</div>
+              <div class="apogered-gselected"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="far fa-star"></i><i class="far fa-star"></i></div>
+              <p>Месяц назад заказывал чизкейк в Москве на 8 марта. Заплатил онлайн. Все сделали и привезли во время, класс.</p>
+            </div>
+          </div>
+          <div class="vemotau-vokusipol">
+            <div class="testimonial">
+              <div class="ramka"><img th:src="@{/Images/Shahlo.png}" alt="Shahlo"></div>
+              <div class="gecedanam">Shahlo</div>
+              <div class="apogered-gselected"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="far fa-star"></i></div>
+              <p>Невероятно вкусный и красивый тортик, спасибо вам большое. Заказывали бенто торт в Москве. Красивый, сочный, бисквиты пропитаны.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="footer">
+      <div class="footer_wrap">
+        <div class="footer_card">
+          <div class="footer_card_title">
+            <h5>Компания</h5>
+          </div>
+          <div class="footer_card_link"><a th:href="@{/news}">Новости</a><a th:href="@{/}">Отзывы</a><a th:href="@{/contacts}">Контакты</a><a th:href="@{/credentials}">Реквизиты</a></div>
+        </div>
+        <div class="footer_card">
+          <div class="footer_card_title">
+            <h5>Информация</h5>
+          </div>
+          <div class="footer_card_link"><a th:href="@{/produce}">Производтства</a><a th:href="@{/delivery_and_pay}">Оплата</a><a th:href="@{/licenses_detail}">Политика</a></div>
+        </div>
+        <div class="footer_card">
+          <div class="footer_card_title">
+            <h5>Помощь</h5>
+          </div>
+          <div class="footer_card_link"><a th:href="@{/payment_conditions}">Условия оплаты</a><a th:href="@{/delivery_and_pay}">Условия доставки</a></div>
+        </div>
+      </div>
+      <div class="footer_social_wrap">
+        <hr><a class="img_one" href="https://vk.com"></a><a class="img_two" href="https://youtube.com"></a><a class="img_three" href="https://tiktok.com"></a>
+        <hr>
+      </div>
+      <div class="footer_copyright">
+        <p>2023 © Powered by Khasan Abdurakhmanov</p>
+        <div class="payment">
+          <div class="payment_one"></div>
+          <div class="payment_two"></div>
+          <div class="payment_three"></div>
+        </div>
+      </div>
+    </div>
+  </body>
+  <script>
+    function showNextDiv(clickedElement) {
+    	const parentDiv = clickedElement.closest('.cake_card');
+    	const cakeCards = parentDiv.parentNode.querySelectorAll('.cake_card');
+    	const currentCardIndex = Array.from(cakeCards).indexOf(parentDiv);
+    	const childDivs = cakeCards[currentCardIndex].querySelectorAll('.cake_card_st, .cake_card_nd, .cake_card_rd, .cake_card_th');
+    	let currentDivIndex = Array.from(childDivs).indexOf(clickedElement);
+    	childDivs[currentDivIndex].style.display = 'none';
+    	currentDivIndex = (currentDivIndex + 1) % childDivs.length;
+    	childDivs[currentDivIndex].style.display = 'block';
+    
+    	console.log(currentCardIndex);
+    }
+    
+    document.addEventListener('DOMContentLoaded', () => {
+    	// инициализация слайдера
+    	new ItcSimpleSlider('.itcss', {
+    		loop: true,
+    		autoplay: true,
+    		interval: 5000,
+    		swipe: true,
+    	});
+    });
+    
+    
+    var images = document.querySelectorAll('.popular_category_card>a>img');
+    
+    images.forEach(function(image) {
+    	var text = image.getAttribute('data-text');
+    	var span = document.createElement('span');
+    	span.innerText = text;
+    	span.style.display = "inline-block";
+    	span.style.position = "relative";
+    	span.style.bottom = "35px";
+    	span.style.background = "#FFFEFE";
+    	span.style.color = "#000000";
+    	span.style.opacity = "0";
+    	span.style.transition = "opacity 0.3s ease";
+    	span.style.textAlign = "center";
+    	span.style.padding="0px 10px 0px 10px";
+    	span.style.whiteSpace = "nowrap";
+    	image.parentNode.insertBefore(span, image.nextSibling);
+    
+    	image.addEventListener('mouseover', function() {
+    		span.style.opacity = 1;
+    	});
+    
+    	image.addEventListener('mouseout', function() {
+    		span.style.opacity = 0;
+    	});
+    });
+    
+    $(document).ready(function() {
+    	const productionWrap = $('.slick-slider');
+    		if (productionWrap.length) {
+    			productionWrap.slick({
+    			slidesToShow: 4,
+    			slidesToScroll: 1,
+    			autoplay: true,
+    			autoplaySpeed: 5000,
+    			arrows:false,
+    			pauseOnHover:true,
+    			infinite:true,
+    		});
+    	}
+    });
+
+     let priceStrings = document.querySelectorAll('.pr');
+
+      priceStrings.forEach(pr => {
+        // Сохраняем текстовое содержимое элемента в переменной
+        const originalText = pr.textContent;
+        const price = Number(pr.textContent);
+        const formattedPrice = numeral(price).format('0,0.00');
+        // Заменяем только часть содержимого элемента, содержащую цену
+        pr.innerHTML = formattedPrice;
+      });
+
+
+
+
+
+  </script>
+</html>

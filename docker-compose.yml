@@ -1,0 +1,17 @@
+services:
+  database:
+    image: postgres:v2
+    container_name: st17-gitlab-db
+    restart: always
+    network_mode: "host"
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: user
+      POSTGRES_DB: CakeStudio
+  application:
+    depends_on:
+      - database
+    image: my_app_img:v2
+    container_name: st17-gitlab-app
+    restart: always
+    network_mode: "host"

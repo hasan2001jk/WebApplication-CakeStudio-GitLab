@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" th:href="@{~/style/order.css}">
+    <title>Email Template</title>
+</head>
+<body>
+<h2>Ваш заказ успешно оформлен!</h2>
+<p>Добрый день, <span th:text="${first_name+' '+ last_name}"></span></p>
+<p>Информация о заказе:</p>
+<table>
+    <thead>
+    <tr>
+        <th colspan="2" style="background: antiquewhite;">Тип покупателя и регион доставки</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td style="font-weight:bold;">Cубъект: </td>
+        <td th:text="${subject_face}"></td>
+    </tr>
+    <tr>
+        <td style="font-weight:bold;">Город: </td>
+        <td th:text="${city}"></td>
+    </tr>
+    <tr>
+        <td style="font-weight:bold;">Станция получения: </td>
+        <td th:text="${receiving_station}"></td>
+    </tr>
+    <tr>
+        <td style="font-weight:bold;">Номер поезда: </td>
+        <td th:text="${train_number}"></td>
+    </tr>
+    <tr th:if="${vagon_num}!=empty">
+        <td style="font-weight:bold;">Номер вагона: </td>
+        <td th:text="${vagon_num}"></td>
+    </tr>
+    <tr>
+        <td style="font-weight:bold;">Дата самовывоза: </td>
+        <td th:text="${date_and_time}"></td>
+    </tr>
+    <tr>
+        <td style="font-weight:bold;">Способ доставки: </td>
+        <td th:text="${delivery_way}"></td>
+    </tr>
+    <tr>
+        <td style="font-weight:bold;">Способ оплаты: </td>
+        <td th:text="${pay_method}"></td>
+    </tr>
+    <tr>
+        <td colspan="2" style="text-align: center;font-weight: bold;background: antiquewhite;">Получатель</td>
+    </tr>
+    <tr>
+        <td style="font-weight:bold;">Фамилия и имя: </td>
+        <td th:text="${first_name}+' '+${last_name}"></td>
+    </tr>
+    <tr>
+        <td style="font-weight:bold;">E-mail: </td>
+        <td><a th:href="@{'mailto:'+${email}}" th:text="${email}"></a></td>
+    </tr>
+    <tr>
+        <td style="font-weight:bold;">Телефон: </td>
+        <td th:text="${phone}"></td>
+    </tr>
+    </tbody>
+</table>
+<table class="items_in_basket_table" style="margin-top:20px; min-width: 100%;display: table;border: 1px solid gray;background: cornsilk;">
+    <tr class="items_table_tr" style="border-top: none;border-bottom: 1px solid #ececec;position: relative;padding: 7px 10px 8px!important;">
+        <td class="items_table_td items_table_td_title_properties" style="padding-bottom:5px;">
+            <div class="items_table_td_title" style="font-weight:bold">Наименование</div>
+        </td>
+        <td class="items_table_td items_table_td_title_properties" style="padding-bottom:5px;">
+            <div class="items_table_td_title" style="font-weight:bold">Скидка</div>
+        </td>
+        <td class="items_table_td items_table_td_title_properties" style="padding-bottom:5px;">
+            <div class="items_table_td_title" style="font-weight:bold">Цена</div>
+        </td>
+        <td class="items_table_td items_table_td_title_properties" style="padding-bottom:5px;">
+            <div class="items_table_td_title" style="font-weight:bold">Количество</div>
+        </td>
+        <td class="items_table_td items_table_td_title_properties" style="padding-bottom:5px;">
+            <div class="items_table_td_title" style="font-weight:bold">Сумма</div>
+        </td>
+    </tr>
+    <tr class="items_table_tr" th:each="cart:${cart_item}" style="border-top: none;border-bottom: 1px solid #ececec;position: relative;">
+        <td class="items_table_td" style="min-width: 300px;">
+            <div class="items_table_block">
+                <div class="items_table_block_img"><a href="#">
+                    <div class="items_table_block_img_container"></div></a></div>
+                <div class="items_table_item_content">
+                    <div class="items_table_item_title"><a th:text="${cart.getProduct().getName()}"></a></div>
+                    <div class="items_table_container_scu" style="margin: 0;padding: 0;font-size: 12px;line-height: 16px;color: #777;">
+                        <div class="items_table_td_title" style="text-align:left;">Выбрать начинку</div>
+                        <div class="items_table_td_text" style="text-align:left;" th:text="${cart.getStuffing().getValue()}" th:if="${cart.getStuffing()!=null}"></div>
+                        <div class="items_table_td_text" style="text-align:left;" th:text="${random_stuffing}" th:if="${cart.getStuffing()==null}"></div>
+                    </div>
+                </div>
+            </div>
+        </td>
+        <td class="items_table_td" th:if="${cart.getProduct().getOldPrice()!=0}">
+            <span class="items_table_td_text" style="font-size: 13px;" th:text="${#numbers.formatDecimal(((cart.getProduct().getOldPrice()-cart.getProduct().getPrice())*100)/cart.getProduct().getOldPrice(), 1, 1, 'POINT')}+ ' %'"></span>
+        </td>
+        <td class="items_table_td" th:if="${cart.getProduct().getOldPrice()==0}">
+            <span class="items_table_td_text" style="font-size: 13px;">0 %</span>
+        </td>
+        <td class="items_table_td">
+            <div class="items_table_td_text"><strong class="item_price" style="white-space: nowrap;font-size: 13px;line-height: 16px;color: #333;" th:text="${#numbers.formatDecimal(cart.getProduct().getPrice(), 2, 2, 'POINT')}+' ₽'"></strong><strong class="item_price_old" style="margin: -2px 0 -5px 1px!important;font-size: 12px;font-weight: 400!important;line-height: 20px;color: #777;display: block;white-space: nowrap;text-decoration: line-through;" th:text="${#numbers.formatDecimal(cart.getProduct().getOldPrice(), 2, 2, 'POINT')}+' ₽'" th:if="${cart.getProduct().getOldPrice()!=0}"></strong></div>
+        </td>
+        <td class="items_table_td" style="text-align:center;">
+            <div class="items_table_td_text"><span th:text="${cart.getQuantity()}+' шт'" style="font-size: 14px;line-height: 16px;color: #333;"></span></div>
+        </td>
+        <td class="items_table_td">
+            <div class="items_table_td_text"><strong class="item_price all" style="white-space: nowrap;font-size: 13px;line-height: 16px;color: #333;" th:text="${#numbers.formatDecimal(cart.getProduct().getPrice()*cart.getQuantity(), 2, 2, 'POINT')}+' ₽'"></strong><strong class="item_price_old" style="margin: -2px 0 -5px 1px!important;font-size: 12px;font-weight: 400!important;line-height: 20px;color: #777;display: block;white-space: nowrap;text-decoration: line-through;" th:text="${#numbers.formatDecimal(cart.getProduct().getOldPrice()*cart.getQuantity(), 2, 2, 'POINT')}+' ₽'" th:if="${cart.getProduct().getOldPrice()!=0}"></strong></div>
+        </td>
+    </tr>
+    <tr class="services_order_item" th:if="${quantity_for_boxes}!=0">
+        <td class="services_order_item_info" colspan="4">
+            <div class="services_order_item_info_inner" style="background: url(https://cdn.tortoff.net/bitrix/templates/aspro_max/images/dott.png) no-repeat;background-position: 0 9px;background-repeat: repeat-x;font-size: .867em;line-height: 1.385em;"><span class="services_order_item_title" >Упаковочная коробка</span><span class="services_order_item_x"> * </span><span class="services_order_item_quantity" th:text="${quantity_for_boxes}+ ' шт'"></span></div>
+        </td>
+        <td class="services_order_item_price"><span class="price font-bold" th:text="${#numbers.formatDecimal(price_for_box, 2, 2, 'POINT')}+' ₽'" style="font-size: .867em;font-weight: bold;line-height: 1.385em;display: block;"></span><span class="price_discount" style="font-size: .733em;line-height: 1.273em;display: block;text-decoration: line-through;color: #777;" th:text="${#numbers.formatDecimal(old_price_for_box, 2, 2, 'POINT')}+' ₽'"></span></td>
+    </tr>
+    <tr class="services_item_tr_padding">
+        <td class="services_item_td_padding" colspan="5"></td>
+    </tr>
+</table>
+<p>Ваша <a target="_blank" href="https://broadcast.com/cake">ссылка</a> на видеотрансляцию процесса приготовления ваших кондитерских изделий;)</p>
+</body>
+</html>

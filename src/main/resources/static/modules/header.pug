@@ -1,0 +1,90 @@
+header
+	.header_wrapper
+		.header_logo
+			img(src="./Logo/Photographer-Arranging.svg", alt="Logo")
+			a(href='./index.html')#logo_text Cake of your dreams
+		.header_menu
+			.header_menu_category
+				ul
+					li: a(href='./news.html') новости
+					li: a(href='./production.html') продукция
+					li: a(href='./o_nas.html') о нас
+		.auth_wrapper
+			.dropdown
+				lord-icon(
+					src="https://cdn.lordicon.com/ajkxzzfb.json"
+					trigger="morph"
+					colors="primary:#ffc738,secondary:#4bb3fd"
+					state="morph-group"
+					style="width:40px;height:40px"
+					class="dropdown-toggle"
+				)
+				.dropdown-content
+					.dropdown-content-wrapper
+						.dropdown-content-item
+							a.sign-in(href='./auth.html') Войти
+							a.join-in(href='./registration.html') Регистрация
+						.dropdown-content-item
+							img(src="./Icons/close.png", alt="close", class="close-icon")
+					.dropdown-content-wrapper_info
+						.dropdown-content-wrapper_info_all
+							img(src="./Icons/my_account_WB.png", alt="My Account", class="hover_img")
+							a.hover_text(href="./my_account.html", target="_blank") мой аккаунт
+					.dropdown-content-wrapper_info
+						.dropdown-content-wrapper_info_all
+							img(src="./Icons/wedding_cake.png", alt="My Orders", class="hover_img")
+							a.hover_text(href="./my_orders.html", target="_blank") мои заказы
+					.dropdown-content-wrapper_info
+						.dropdown-content-wrapper_info_all
+							img(src="./Icons/credit-card.png", alt="Payment", class="hover_img")
+							a.hover_text(href="./payment_method.html", target="_blank") Оплата
+					.dropdown-content-wrapper_info
+						.dropdown-content-wrapper_info_all
+							img(src="./Icons/sms.png", alt="Contact Preferences", class="hover_img")
+							a.hover_text(href="./contact_preferences.html", target="_blank") Контакты
+			.drop
+				lord-icon(
+					src="https://cdn.lordicon.com/lpddubrl.json"
+					trigger="hover"
+					style="width:40px;height:40px"
+					class="drop-toggle"
+				)
+				.drop-content
+					.drop_wrap_st
+						.drop_wrap_title
+							p Моя корзина,
+							span 1 шт
+						.drop_wrap_icon
+							img(src="./Icons/close.png", alt="close", class="close-ico")
+					.drop_wrap_nd
+						.purchase_img_wrap
+							img(src="./Images/Cakes/Cake_red_heart.jpg", alt="Cake Red Heart")
+						.purchase_text_wrap
+							p $ 35.00
+							p Торт "Красное сердце"
+							p Данный торт является популярным выбором для Дня Святого Валентина или романтических случаев
+							p Количество:
+								span 1
+							.purchase_icon_wrap
+								lord-icon(
+									src="https://cdn.lordicon.com/jmkrnisz.json"
+									trigger="hover"
+									colors="primary:#c71f16"
+									state="hover-empty"
+									style="width:20px;height:20px"
+									class="trash_icon"
+								)
+					.drop_wrap_rd
+						.sub_total_wrap
+							span.sub_total_wrap_title Итого
+							span.sub_total_wrap_price $ 35.00
+					.drop_wrap_th
+						p.button_view_bag
+							a(href='./basket.html') В корзину
+						p.button_checkout_bag
+							a(href='./order.html') Оформить
+
+
+
+
+
