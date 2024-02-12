@@ -1,0 +1,63 @@
+stages:
+  - build
+  - test
+  - push
+  - deploy
+  
+variables:
+  IMAGE_NAME_APP: "my_app_img"
+  IMAGE_NAME_DB: "postgres"
+  IMAGE_TAG: "v2"
+  REPO: "khasanabdurakhmanov/khasanabdurakhmanov-repo"
+  DEPLOY_IP_ADDR: 10.2.0.23
+
+build_application:
+  stage: build
+  tags:
+    - st17-runner
+  before_script:
+    - apt update
+    - apt install docker.io -y
+    - apt install docker-compose-v2 -y
+  script:
+    - docker build -t my_app_img:v2 -f Dockerfile1 .
+    - docker build -t postgres:v2 -f Dockerfile2 .
+    - docker compose up -d
+
+
+test:
+  stage: test
+  tags:
+    - st17-runner
+  before_script:
+    - sleep 60
+    - curl http://localhost:8080
+  script:
+    - echo "$password_secret" | sudo -S docker exec -t st17-gitlab-app ./mvnw test
+
+
+docker_hub:
+  stage: push
+  tags:
+    - st17-runner
+  before_script:
+    - echo "$password_secret" | sudo -S docker login -u $REGISTRY_USER -p $REGISTRY_PASS
+    - sudo docker login -u $REGISTRY_USER -p $REGISTRY_PASS
+  script:
+    - echo "$password_secret" | sudo docker tag $IMAGE_NAME_APP:$IMAGE_TAG $REPO:app_v2
+    - echo "$password_secret" | sudo docker tag $IMAGE_NAME_DB:$IMAGE_TAG $REPO:db_v2
+    - sudo docker push $REPO:app_v2
+    - sudo docker push $REPO:db_v2
+
+
+deploy:
+  stage: deploy
+  tags:
+    - ansible
+  before_script:
+    - whoami
+    - ls
+    - cd ansible/
+    - ls
+  script:
+    - ansible-playbook --key-file ~/.ssh/id_rsa main.yml
